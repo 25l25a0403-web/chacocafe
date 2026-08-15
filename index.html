@@ -13,11 +13,10 @@
     :root {
       --bg-dark: #160d08;
       --bg-light: #faf6f0;
-      --bg-card: #f3e9dc;
-      --accent-brown: #4a2c11;
+      --accent-brown: #3b1e08;
       --btn-gold: #e5a95f;
       --text-dark: #2c1a0e;
-      --text-muted: #7a6859;
+      --text-muted: #6b5849;
       --star-color: #f4a261;
       --transition: all 0.3s ease;
     }
@@ -212,7 +211,7 @@
     }
 
     .hero-content .welcome span {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Cinzel', serif;
       font-style: italic;
       color: var(--btn-gold);
     }
@@ -259,7 +258,6 @@
       padding: 2rem 16px;
     }
 
-    /* INCREASED HEADING & BUTTON SIZES */
     .section-header {
       display: flex;
       align-items: center;
@@ -268,7 +266,7 @@
     }
 
     .section-title {
-      font-size: 1.25rem; /* Increased size */
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--accent-brown);
       display: flex;
@@ -278,16 +276,16 @@
     }
 
     .section-title i {
-      font-size: 1.1rem; /* Increased icon size */
+      font-size: 1.1rem;
     }
 
     .view-all-btn {
-      padding: 6px 16px; /* Increased size */
+      padding: 6px 16px;
       border: 1.5px solid var(--accent-brown);
       border-radius: 18px;
       background: transparent;
       color: var(--accent-brown);
-      font-size: 0.85rem; /* Increased size */
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
@@ -298,7 +296,7 @@
       color: #fff;
     }
 
-    /* LARGER AUTO-SCROLLING CATEGORIES */
+    /* CAROUSEL */
     .carousel-container {
       overflow: hidden;
       width: 100%;
@@ -322,12 +320,12 @@
       align-items: center;
       gap: 8px;
       flex-shrink: 0;
-      width: 96px; /* Increased width */
+      width: 96px;
     }
 
     .cat-img-wrapper {
-      width: 90px; /* Increased image size */
-      height: 90px; /* Increased image size */
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid #e0d0c0;
@@ -341,13 +339,13 @@
     }
 
     .cat-item span {
-      font-size: 0.82rem; /* Increased text size */
+      font-size: 0.82rem;
       font-weight: 600;
       text-align: center;
       color: var(--text-dark);
     }
 
-    /* SEARCH */
+    /* SEARCH BAR */
     .search-container {
       position: relative;
       margin-bottom: 1.4rem;
@@ -373,82 +371,103 @@
       font-size: 0.95rem;
     }
 
-    /* FEATURED PRODUCT CARD (IMAGE LEFT, DETAILS RIGHT) */
-    .featured-card {
-      background: var(--bg-card);
-      border-radius: 16px;
-      display: flex;
-      flex-direction: row; /* Image Left, Text Right */
-      overflow: hidden;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-    }
-
-    .featured-img {
-      flex: 1;
-      min-height: 180px;
-    }
-
-    .featured-img img {
+    /* OVERLAY ORDER NOW CARD (MATCHED TO DESIGN) */
+    .overlay-featured-card {
+      position: relative;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      min-height: 240px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      background: url('https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
     }
 
-    .featured-info {
-      flex: 1.25;
-      padding: 16px 14px;
+    /* Gradient Overlay for Readable Text on Left Side */
+    .overlay-featured-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        #eddccb 0%,
+        #e4cbbe 45%,
+        rgba(228, 203, 190, 0.35) 70%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      z-index: 1;
+    }
+
+    .overlay-content {
+      position: relative;
+      z-index: 2;
+      width: 58%; /* Keeps details contained to the left */
+      padding: 20px 16px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
     }
 
-    .featured-info h3 {
-      font-size: 1rem;
-      font-weight: 700;
+    .overlay-content h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
       color: var(--accent-brown);
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+      margin-bottom: 8px;
     }
 
     .rating {
       display: flex;
       align-items: center;
-      gap: 2px;
-      margin: 4px 0 8px 0;
-      color: var(--star-color);
-      font-size: 0.7rem;
+      gap: 3px;
+      margin-bottom: 10px;
+      color: #f4a261;
+      font-size: 0.8rem;
     }
 
     .rating span {
-      color: var(--text-muted);
+      color: #8c7766;
+      font-size: 0.75rem;
       margin-left: 4px;
+      font-weight: 500;
     }
 
-    .featured-info p {
-      color: var(--text-muted);
-      font-size: 0.72rem;
-      line-height: 1.35;
-      margin-bottom: 10px;
+    .overlay-content p {
+      color: #594436;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      margin-bottom: 14px;
+      font-weight: 400;
     }
 
     .price-tag {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-bottom: 10px;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent-brown);
+      margin-bottom: 14px;
     }
 
     .order-now-btn {
       align-self: flex-start;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       background: var(--accent-brown);
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 6px;
+      color: #ffffff;
+      padding: 9px 18px;
+      border-radius: 10px;
       border: none;
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(59, 30, 8, 0.25);
+      transition: var(--transition);
+    }
+
+    .order-now-btn:hover {
+      background: #251204;
     }
 
     /* REVIEWS */
@@ -494,7 +513,7 @@
       line-height: 1.35;
     }
 
-    /* LENGTHY DETAILED FOOTER */
+    /* LENGTHY FOOTER */
     footer {
       background: var(--bg-dark);
       color: #ffffff;
@@ -647,7 +666,7 @@
       <button class="view-all-btn">View All</button>
     </div>
 
-    <!-- LARGER CAROUSEL -->
+    <!-- CAROUSEL -->
     <div class="carousel-container">
       <div class="items-carousel" id="catCarousel">
         <div class="cat-item">
@@ -693,12 +712,9 @@
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
 
-    <!-- FEATURED PRODUCT CARD (IMAGE LEFT, DETAILS RIGHT) -->
-    <div class="featured-card">
-      <div class="featured-img">
-        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=600&q=80" alt="Caramel Latte" />
-      </div>
-      <div class="featured-info">
+    <!-- OVERLAY ORDER NOW CARD -->
+    <div class="overlay-featured-card">
+      <div class="overlay-content">
         <h3>CARAMEL LATTE</h3>
         <div class="rating">
           <i class="fa-solid fa-star"></i>
@@ -762,7 +778,7 @@
     </div>
   </section>
 
-  <!-- EXPANDED LENGTHY FOOTER -->
+  <!-- EXPANDED FOOTER -->
   <footer>
     <div class="footer-brand">
       <a href="#" class="logo">
@@ -854,9 +870,9 @@
       dots[currentSlide].classList.add('active');
     }, 3500);
 
-    // 3. Category Items Auto-Scroll (One-by-One)
+    // 3. Category Items Auto-Scroll
     const catCarousel = document.getElementById('catCarousel');
-    let scrollStep = 112; // Adjusted step width for larger item size
+    let scrollStep = 112;
 
     setInterval(() => {
       if (catCarousel.scrollLeft + catCarousel.clientWidth >= catCarousel.scrollWidth - 10) {
