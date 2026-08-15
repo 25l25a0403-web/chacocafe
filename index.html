@@ -32,7 +32,7 @@
       background-color: var(--bg-light);
       color: var(--text-dark);
       overflow-x: hidden;
-      max-width: 480px; /* Mobile Frame Container */
+      max-width: 480px;
       margin: 0 auto;
       border-left: 1px solid #e0d0c0;
       border-right: 1px solid #e0d0c0;
@@ -371,20 +371,26 @@
       font-size: 0.95rem;
     }
 
-    /* OVERLAY ORDER NOW CARD (MATCHED TO DESIGN) */
+    /* MENU GRID CARDS (15 CARDS TOTAL) */
+    .menu-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
     .overlay-featured-card {
       position: relative;
       width: 100%;
-      min-height: 240px;
+      min-height: 220px;
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-      background: url('https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+      background-size: cover;
+      background-position: center;
       display: flex;
       align-items: center;
     }
 
-    /* Gradient Overlay for Readable Text on Left Side */
     .overlay-featured-card::before {
       content: '';
       position: absolute;
@@ -392,8 +398,8 @@
       background: linear-gradient(
         to right,
         #eddccb 0%,
-        #e4cbbe 45%,
-        rgba(228, 203, 190, 0.35) 70%,
+        #e4cbbe 48%,
+        rgba(228, 203, 190, 0.35) 72%,
         rgba(0, 0, 0, 0) 100%
       );
       z-index: 1;
@@ -402,71 +408,299 @@
     .overlay-content {
       position: relative;
       z-index: 2;
-      width: 58%; /* Keeps details contained to the left */
-      padding: 20px 16px;
+      width: 60%;
+      padding: 18px 14px;
       display: flex;
       flex-direction: column;
     }
 
     .overlay-content h3 {
       font-family: 'Poppins', sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 800;
       color: var(--accent-brown);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
       line-height: 1.1;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .rating {
       display: flex;
       align-items: center;
       gap: 3px;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       color: #f4a261;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     }
 
     .rating span {
       color: #8c7766;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       margin-left: 4px;
       font-weight: 500;
     }
 
     .overlay-content p {
       color: #594436;
-      font-size: 0.78rem;
-      line-height: 1.4;
-      margin-bottom: 14px;
+      font-size: 0.72rem;
+      line-height: 1.35;
+      margin-bottom: 10px;
       font-weight: 400;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .price-tag {
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       font-weight: 800;
       color: var(--accent-brown);
-      margin-bottom: 14px;
     }
 
     .order-now-btn {
-      align-self: flex-start;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: var(--accent-brown);
       color: #ffffff;
-      padding: 9px 18px;
-      border-radius: 10px;
+      padding: 7px 14px;
+      border-radius: 8px;
       border: none;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(59, 30, 8, 0.25);
+      box-shadow: 0 3px 8px rgba(59, 30, 8, 0.2);
       transition: var(--transition);
     }
 
     .order-now-btn:hover {
+      background: #251204;
+    }
+
+    /* MODAL POPUP SHEET */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-sheet {
+      background: #faf4ec;
+      width: 100%;
+      max-width: 480px;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-overlay.active .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .modal-hero-img {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .modal-top-bar {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-back-btn, .modal-heart-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dark);
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .modal-body {
+      padding: 20px 20px 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      background: #d4c2b0;
+      border-radius: 2px;
+      align-self: center;
+      margin-bottom: 4px;
+    }
+
+    .modal-title-row h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent-brown);
+      margin-bottom: 4px;
+    }
+
+    .modal-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .modal-price {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent-brown);
+    }
+
+    .option-group-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .size-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .size-btn {
+      padding: 12px 14px;
+      border: 1.5px solid #d4c2b0;
+      border-radius: 12px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      transition: var(--transition);
+    }
+
+    .size-btn.selected {
+      border-color: var(--accent-brown);
+      background: #f7efe6;
+    }
+
+    .size-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-brown);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .size-btn.selected .size-dot::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent-brown);
+      border-radius: 50%;
+    }
+
+    .quantity-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f2e7db;
+      padding: 12px 16px;
+      border-radius: 12px;
+    }
+
+    .quantity-row span {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #fff;
+      padding: 4px 12px;
+      border-radius: 8px;
+      border: 1px solid #d4c2b0;
+    }
+
+    .qty-btn {
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-brown);
+      cursor: pointer;
+    }
+
+    .qty-value {
+      font-size: 1rem;
+      font-weight: 700;
+      min-width: 16px;
+      text-align: center;
+    }
+
+    .add-to-list-btn {
+      width: 100%;
+      background: var(--accent-brown);
+      color: #fff;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(59, 30, 8, 0.3);
+      transition: var(--transition);
+      margin-top: 6px;
+    }
+
+    .add-to-list-btn:hover {
       background: #251204;
     }
 
@@ -513,7 +747,7 @@
       line-height: 1.35;
     }
 
-    /* LENGTHY FOOTER */
+    /* FOOTER */
     footer {
       background: var(--bg-dark);
       color: #ffffff;
@@ -675,33 +909,29 @@
           </div>
           <span>Cappuccino</span>
         </div>
-
         <div class="cat-item">
           <div class="cat-img-wrapper">
             <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&q=80" alt="Chocolate Cake" />
           </div>
           <span>Chocolate Cake</span>
         </div>
-
         <div class="cat-item">
           <div class="cat-img-wrapper">
             <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400&q=80" alt="Iced Coffee" />
           </div>
           <span>Iced Coffee</span>
         </div>
-
         <div class="cat-item">
           <div class="cat-img-wrapper">
-            <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80" alt="Cheese Sandwich" />
+            <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80" alt="Sandwich" />
           </div>
-          <span>Cheese Sandwich</span>
+          <span>Sandwich</span>
         </div>
-
         <div class="cat-item">
           <div class="cat-img-wrapper">
             <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=400&q=80" alt="Caramel Latte" />
           </div>
-          <span>Caramel Latte</span>
+          <span>Latte</span>
         </div>
       </div>
     </div>
@@ -712,66 +942,9 @@
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
 
-    <!-- OVERLAY ORDER NOW CARD -->
-    <div class="overlay-featured-card">
-      <div class="overlay-content">
-        <h3>CARAMEL LATTE</h3>
-        <div class="rating">
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <span>(128)</span>
-        </div>
-        <p>Smooth espresso with steamed milk and rich caramel flavor.</p>
-        <div class="price-tag">₹199</div>
-        <button class="order-now-btn">
-          <i class="fa-solid fa-cart-shopping"></i> Order Now
-        </button>
-      </div>
-    </div>
-
-  <!-- OVERLAY ORDER NOW CARD -->
-    <div class="overlay-featured-card">
-      <div class="overlay-content">
-        <h3>CARAMEL LATTE</h3>
-        <div class="rating">
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <span>(128)</span>
-        </div>
-        <p>Smooth espresso with steamed milk and rich caramel flavor.</p>
-        <div class="price-tag">₹199</div>
-        <button class="order-now-btn">
-          <i class="fa-solid fa-cart-shopping"></i> Order Now
-        </button>
-      </div>
-    </div>
-
-  <!-- OVERLAY ORDER NOW CARD -->
-    <div class="overlay-featured-card">
-      <div class="overlay-content">
-        <h3>CARAMEL LATTE</h3>
-        <div class="rating">
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <span>(128)</span>
-        </div>
-        <p>Smooth espresso with steamed milk and rich caramel flavor.</p>
-        <div class="price-tag">₹199</div>
-        <button class="order-now-btn">
-          <i class="fa-solid fa-cart-shopping"></i> Order Now
-        </button>
-      </div>
-    </div>
-</section>
+    <!-- 15 ITEMS LIST GRID -->
+    <div class="menu-grid" id="menuGrid"></div>
+  </section>
 
   <!-- CUSTOMER REVIEWS SECTION -->
   <section id="offers">
@@ -818,7 +991,58 @@
     </div>
   </section>
 
-  <!-- EXPANDED FOOTER -->
+  <!-- PRODUCT DETAIL POPUP MODAL -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-sheet">
+      <div class="modal-hero-img" id="modalImg" style="background-image: url('');">
+        <div class="modal-top-bar">
+          <button class="modal-back-btn" id="modalCloseBtn"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="modal-heart-btn"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="sheet-handle"></div>
+        <div class="modal-title-row">
+          <h2 id="modalTitle">Caramel Latte</h2>
+          <div class="rating" id="modalRating">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <span>(128)</span>
+          </div>
+        </div>
+        <p class="modal-desc" id="modalDesc">Smooth espresso with steamed milk and rich caramel flavor.</p>
+        <div class="modal-price" id="modalPrice">₹199</div>
+
+        <div>
+          <div class="option-group-title">Size</div>
+          <div class="size-options">
+            <button class="size-btn selected" id="sizeRegular" onclick="selectSize('regular')">
+              <div class="size-dot"></div>
+              <span>Regular</span>
+            </button>
+            <button class="size-btn" id="sizeLarge" onclick="selectSize('large')">
+              <div class="size-dot"></div>
+              <span>Large +₹40</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="quantity-row">
+          <span>Quantity</span>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty(-1)">-</button>
+            <span class="qty-value" id="modalQty">1</span>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+
+        <button class="add-to-list-btn" id="addToListBtn" onclick="addToCartAction()">
+          <i class="fa-solid fa-cart-shopping"></i> Add To List - ₹199
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer>
     <div class="footer-brand">
       <a href="#" class="logo">
@@ -890,6 +1114,128 @@
 
   <!-- JAVASCRIPT -->
   <script>
+    // 15 Menu Items Data
+    const menuItems = [
+      { id: 1, name: "CARAMEL LATTE", desc: "Smooth espresso with steamed milk and rich caramel flavor.", price: 199, rating: 128, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80" },
+      { id: 2, name: "CLASSIC CAPPUCCINO", desc: "Rich espresso under a dark, velvety layer of foamed milk.", price: 169, rating: 94, img: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=1000&q=80" },
+      { id: 3, name: "ICED COLD BREW", desc: "Steeped slowly for 12 hours for a super smooth, bold taste.", price: 179, rating: 110, img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1000&q=80" },
+      { id: 4, name: "CHOCOLATE FUDGE CAKE", desc: "Decadent multi-layered chocolate cake with ganache frosting.", price: 220, rating: 85, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1000&q=80" },
+      { id: 5, name: "CHEESE GRILLED SANDWICH", desc: "Loaded with melted cheddar and herbs on toasted artisan bread.", price: 149, rating: 72, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=1000&q=80" },
+      { id: 6, name: "VANILLA BEAN FRAPPUCCINO", desc: "Blended ice coffee infused with sweet natural vanilla bean.", price: 210, rating: 145, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=1000&q=80" },
+      { id: 7, name: "HAZELNUT MACCHIATO", desc: "Espresso combined with hazelnut syrup and steamed whole milk.", price: 190, rating: 98, img: "https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&w=1000&q=80" },
+      { id: 8, name: "MOCHA FRAPPE", desc: "Rich chocolate syrup, espresso, and milk blended with ice.", price: 229, rating: 160, img: "https://images.unsplash.com/photo-1595928642587-c5aeee639017?auto=format&fit=crop&w=1000&q=80" },
+      { id: 9, name: "BLUEBERRY MUFFIN", desc: "Baked fresh with juicy wild blueberries and a sweet crumble top.", price: 120, rating: 64, img: "https://images.unsplash.com/photo-1607958996333-41aef7caefcc?auto=format&fit=crop&w=1000&q=80" },
+      { id: 10, name: "IRISH COFFEE", desc: "Black coffee with Irish whiskey notes, topped with whipped cream.", price: 249, rating: 112, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80" },
+      { id: 11, name: "AVOCADO TOAST", desc: "Smashed avocado, cherry tomatoes, and microgreens on sourdough.", price: 219, rating: 88, img: "https://images.unsplash.com/photo-1588137378633-dea1336ce1e2?auto=format&fit=crop&w=1000&q=80" },
+      { id: 12, name: "STRAWBERRY CHEESECAKE", desc: "Creamy New York cheesecake topped with strawberry compote.", price: 239, rating: 134, img: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=1000&q=80" },
+      { id: 13, name: "AFFOGATO", desc: "A scoop of vanilla bean gelato drenched in a shot of hot espresso.", price: 180, rating: 92, img: "https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=1000&q=80" },
+      { id: 14, name: "GARLIC HERB BREAD", desc: "Warm toasted baguette infused with garlic butter and melted cheese.", price: 130, rating: 77, img: "https://images.unsplash.com/photo-1619096252214-ef06c457bdae?auto=format&fit=crop&w=1000&q=80" },
+      { id: 15, name: "CREAMY WHITE PASTA", desc: "Penne pasta tossed in rich garlic parmesan cream sauce.", price: 269, rating: 150, img: "https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=1000&q=80" }
+    ];
+    // Render Menu Cards
+    const menuGrid = document.getElementById('menuGrid');
+    menuItems.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'overlay-featured-card';
+      card.style.backgroundImage = `url('${item.img}')`;
+      card.innerHTML = `
+        <div class="overlay-content">
+          <h3>${item.name}</h3>
+          <div class="rating">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <span>(${item.rating})</span>
+          </div>
+          <p>${item.desc}</p>
+          <div class="card-footer-row">
+            <div class="price-tag">₹${item.price}</div>
+            <button class="order-now-btn" onclick='openModal(${JSON.stringify(item)})'>+ Add</button>
+          </div>
+        </div>
+      `;
+      menuGrid.appendChild(card);
+    });
+
+    // Modal State Variables
+    let currentItem = null;
+    let currentSize = 'regular';
+    let currentQty = 1;
+
+    const productModal = document.getElementById('productModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalQty = document.getElementById('modalQty');
+    const addToListBtn = document.getElementById('addToListBtn');
+    const sizeRegular = document.getElementById('sizeRegular');
+    const sizeLarge = document.getElementById('sizeLarge');
+
+    function openModal(item) {
+      currentItem = item;
+      currentSize = 'regular';
+      currentQty = 1;
+      
+      modalImg.style.backgroundImage = `url('${item.img}')`;
+      modalTitle.textContent = item.name;
+      modalDesc.textContent = item.desc;
+      
+      sizeRegular.classList.add('selected');
+      sizeLarge.classList.remove('selected');
+      modalQty.textContent = currentQty;
+      
+      updateModalTotal();
+      productModal.classList.add('active');
+    }
+
+    function closeModal() {
+      productModal.classList.remove('active');
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+    productModal.addEventListener('click', (e) => {
+      if (e.target === productModal) closeModal();
+    });
+
+    function selectSize(size) {
+      currentSize = size;
+      if (size === 'regular') {
+        sizeRegular.classList.add('selected');
+        sizeLarge.classList.remove('selected');
+      } else {
+        sizeLarge.classList.add('selected');
+        sizeRegular.classList.remove('selected');
+      }
+      updateModalTotal();
+    }
+
+    function changeQty(delta) {
+      currentQty += delta;
+      if (currentQty < 1) currentQty = 1;
+      modalQty.textContent = currentQty;
+      updateModalTotal();
+    }
+
+    function updateModalTotal() {
+      if (!currentItem) return;
+      let basePrice = currentItem.price;
+      if (currentSize === 'large') {
+        basePrice += 40;
+      }
+      let totalPrice = basePrice * currentQty;
+      modalPrice.textContent = `₹${totalPrice}`;
+      addToListBtn.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Add To List - ₹${totalPrice}`;
+    }
+
+    function addToCartAction() {
+      alert(`Added ${currentQty}x ${currentItem.name} (${currentSize}) to list successfully!`);
+      closeModal();
+    }
+
     // 1. Mobile Menu Toggle
     const menuToggle = document.getElementById('menuToggle');
     const mobileDrawer = document.getElementById('mobileDrawer');
