@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CHACO CAFÉ - Take a seat & sip life</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ==========================================
+       COLOR PALETTE & DESIGN SYSTEM
+       Extracted from CHACO CAFÉ exterior & interior
+       ========================================== */
+    :root {
+      --bg-dark: #1e130c;        /* Deep Roast Espresso */
+      --bg-card: #2a1b12;        /* Dark Chocolate Card Frame */
+      --accent-warm: #d4a373;    /* Creamy Mocha Accent */
+      --neon-amber: #ffaa33;     /* Warm Neon Signboard Glow */
+      --text-main: #f4eae1;      /* Off-White Foam Text */
+      --text-muted: #ba9e8c;     /* Soft Taupe Tone */
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ==========================================
+       FLOATING BEANS ANIMATION (BACKGROUND)
+       ========================================== */
+    #bean-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-bean {
+      position: absolute;
+      bottom: -50px;
+      color: #3d2618;
+      opacity: 0.35;
+      font-size: 1.5rem;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.1;
+      }
+      50% {
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* ==========================================
+       HEADER & NAVIGATION
+       ========================================== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(30, 19, 12, 0.92);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      border-bottom: 1px solid rgba(212, 163, 115, 0.15);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .logo i {
+      color: var(--neon-amber);
+      font-size: 1.8rem;
+    }
+
+    /* Hamburger Menu Button (3 Lime Bars) */
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-btn span {
+      width: 100%;
+      height: 3px;
+      background-color: #32cd32; /* Vibrant Lime */
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* Navigation Drawer */
+    nav {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 260px;
+      height: 100vh;
+      background: var(--bg-card);
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      padding: 80px 30px 30px 30px;
+      gap: 20px;
+      transition: var(--transition);
+      z-index: 1000;
+    }
+
+    nav.active {
+      right: 0;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--neon-amber);
+      padding-left: 5px;
+    }
+
+    .login-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: var(--neon-amber);
+      color: var(--bg-dark);
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(255, 170, 51, 0.4);
+    }
+
+    /* ==========================================
+       HERO BANNER
+       ========================================== */
+    .hero {
+      position: relative;
+      height: 75vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .hero-overlay {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      background: rgba(15, 9, 6, 0.55);
+      padding: 2.5rem 3rem;
+      border-radius: 15px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 170, 51, 0.3);
+    }
+
+    .hero-overlay h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 12px rgba(255, 170, 51, 0.6);
+    }
+
+    .hero-overlay p {
+      font-size: 1.2rem;
+      color: var(--accent-warm);
+      letter-spacing: 2px;
+      font-style: italic;
+    }
+
+    /* ==========================================
+       SECTION COMMON STYLES
+       ========================================== */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 5%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.3rem;
+      color: var(--accent-warm);
+      margin-bottom: 2rem;
+    }
+
+    /* ==========================================
+       OUR BEST ITEMS (CAROUSEL & SEARCH)
+       ========================================== */
+    .carousel-container {
+      overflow: hidden;
+      white-space: nowrap;
+      margin-bottom: 3rem;
+      position: relative;
+      border-radius: 12px;
+    }
+
+    .carousel-track {
+      display: inline-flex;
+      gap: 20px;
+      animation: scroll 25s linear infinite;
+    }
+
+    .carousel-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .item-card {
+      width: 220px;
+      background: var(--bg-card);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: var(--transition);
+      border: 1px solid rgba(212, 163, 115, 0.1);
+    }
+
+    .item-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--neon-amber);
+    }
+
+    .item-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .item-card h4 {
+      font-size: 1.1rem;
+      white-space: normal;
+    }
+
+    /* Search & Product Grid */
+    .search-box {
+      max-width: 500px;
+      margin: 0 auto 2.5rem auto;
+      display: flex;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px;
+      background: var(--bg-card);
+      border: 1px solid rgba(212, 163, 115, 0.3);
+      border-radius: 25px;
+      color: #fff;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .search-box input:focus {
+      border-color: var(--neon-amber);
+      box-shadow: 0 0 8px rgba(255, 170, 51, 0.3);
+    }
+
+    .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      display: flex;
+      background: var(--bg-card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(212, 163, 115, 0.15);
+      transition: var(--transition);
+    }
+
+    .product-card:hover {
+      border-color: var(--accent-warm);
+    }
+
+    .product-details {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .product-details h3 {
+      font-size: 1.4rem;
+      color: var(--accent-warm);
+      margin-bottom: 8px;
+    }
+
+    .product-details p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+
+    .product-details .price {
+      font-weight: 600;
+      color: var(--neon-amber);
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+
+    .order-btn {
+      align-self: flex-start;
+      padding: 8px 22px;
+      background: transparent;
+      color: var(--neon-amber);
+      border: 1px solid var(--neon-amber);
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .order-btn:hover {
+      background: var(--neon-amber);
+      color: var(--bg-dark);
+      box-shadow: 0 0 10px rgba(255, 170, 51, 0.4);
+    }
+
+    .product-img {
+      width: 35%;
+      min-width: 150px;
+    }
+
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ==========================================
+       OUR CUSTOMERS WHAT DAY (FEEDBACK CAROUSEL)
+       ========================================== */
+    .feedback-track {
+      display: inline-flex;
+      gap: 25px;
+      animation: scroll 30s linear infinite;
+    }
+
+    .feedback-track:hover {
+      animation-play-state: paused;
+    }
+
+    .feedback-card {
+      width: 280px;
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 20px;
+      flex-shrink: 0;
+      white-space: normal;
+      border: 1px solid rgba(212, 163, 115, 0.15);
+      text-align: center;
+    }
+
+    .customer-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 12px auto;
+      border: 2px solid var(--neon-amber);
+    }
+
+    .feedback-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    .feedback-card h5 {
+      color: var(--accent-warm);
+      font-size: 1rem;
+    }
+
+    /* ==========================================
+       FOOTER
+       ========================================== */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: #120b07;
+      border-top: 1px solid rgba(212, 163, 115, 0.15);
+      padding: 3rem 5% 1.5rem 5%;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-icons a {
+      color: var(--accent-warm);
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .social-icons a:hover {
+      color: var(--neon-amber);
+    }
+
+    .footer-links h4 {
+      color: var(--accent-warm);
+      margin-bottom: 15px;
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-links ul li a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links ul li a:hover {
+      color: var(--neon-amber);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive adjustment for Mobile */
+    @media (max-width: 600px) {
+      .product-card {
+        flex-direction: column-reverse;
+      }
+      .product-img {
+        width: 100%;
+        height: 180px;
+      }
+      .hero-overlay h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Background Beans Container -->
+  <div id="bean-container"></div>
+
+  <!-- HEADER -->
+  <header>
+    <a href="#" class="logo">
+      <i class="fa-solid fa-coffee"></i> CHACO CAFÉ
+    </a>
+    <button class="menu-btn" id="menuToggle" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav id="navMenu">
+      <a href="#about">About Us</a>
+      <a href="#offers">Offers</a>
+      <a href="#menu">Our Menu</a>
+      <a href="#login" class="login-btn">Login</a>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-slider">
+      <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=80');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80');"></div>
+    </div>
+    <div class="hero-overlay">
+      <h1>WELCOME TO CHACO CAFÉ</h1>
+      <p>Take a seat & sip life.</p>
+    </div>
+  </section>
+
+  <!-- OUR BEST ITEMS -->
+  <section id="menu">
+    <h2 class="section-title">Our Best Items</h2>
+    
+    <!-- Auto-scrolling Featured Images Carousel -->
+    <div class="carousel-container">
+      <div class="carousel-track" id="carouselTrack">
+        <!-- Javascript dynamically duplicates this for seamless looping -->
+        <div class="item-card" onclick="redirectToOrder('Signature Espresso')">
+          <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=400&q=80" alt="Espresso" />
+          <h4>Signature Espresso</h4>
+        </div>
+        <div class="item-card" onclick="redirectToOrder('Choco Hazelnut Latte')">
+          <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=400&q=80" alt="Latte" />
+          <h4>Choco Latte</h4>
+        </div>
+        <div class="item-card" onclick="redirectToOrder('Dark Chocolate Tart')">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&q=80" alt="Tart" />
+          <h4>Choco Tart</h4>
+        </div>
+        <div class="item-card" onclick="redirectToOrder('Iced Mocha Float')">
+          <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400&q=80" alt="Iced Mocha" />
+          <h4>Iced Mocha</h4>
+        </div>
+        <div class="item-card" onclick="redirectToOrder('Butter Croissant')">
+          <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=400&q=80" alt="Croissant" />
+          <h4>Butter Croissant</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search menu items..." onkeyup="filterProducts()" />
+    </div>
+
+    <!-- Product Grid (Details Left, Image Right) -->
+    <div class="product-list" id="productList">
+      
+      <div class="product-card">
+        <div class="product-details">
+          <h3>Signature Choco Roast</h3>
+          <p>Rich espresso blended with artisanal dark chocolate and steamed milk.</p>
+          <div class="price">$5.50</div>
+          <button class="order-btn" onclick="redirectToOrder('Signature Choco Roast')">Order Now</button>
+        </div>
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80" alt="Choco Roast" />
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-details">
+          <h3>Amber Bean Cold Brew</h3>
+          <p>Slow-steeped for 18 hours, offering smooth caramel tones and minimal acidity.</p>
+          <div class="price">$4.80</div>
+          <button class="order-btn" onclick="redirectToOrder('Amber Bean Cold Brew')">Order Now</button>
+        </div>
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=500&q=80" alt="Cold Brew" />
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-details">
+          <h3>Triple Chocolate Muffin</h3>
+          <p>Freshly baked daily with cocoa nibs and a molten dark chocolate core.</p>
+          <div class="price">$3.90</div>
+          <button class="order-btn" onclick="redirectToOrder('Triple Chocolate Muffin')">Order Now</button>
+        </div>
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=500&q=80" alt="Chocolate Muffin" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- OUR CUSTOMERS WHAT DAY (FEEDBACK CAROUSEL) -->
+  <section id="offers">
+    <h2 class="section-title">Our Customers What Day</h2>
+    <div class="carousel-container">
+      <div class="feedback-track" id="feedbackTrack">
+        
+        <div class="feedback-card">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Customer" class="customer-img" />
+          <p>"The architectural bean building drew me in, but the dark choco espresso keeps me coming back every single day!"</p>
+          <h5>— Sarah L.</h5>
+        </div>
+
+        <div class="feedback-card">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Customer" class="customer-img" />
+          <p>"Best ambiance in town. Sitting inside the cozy coffee cup booth feels like a whole warm vibe."</p>
+          <h5>— Mark D.</h5>
+        </div>
+
+        <div class="feedback-card">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80" alt="Customer" class="customer-img" />
+          <p>"Took an Insta story with their neon sign and got 25% off. Great coffee, amazing deal!"</p>
+          <h5>— Elena R.</h5>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h2><i class="fa-solid fa-coffee" style="color: var(--neon-amber);"></i> CHACO CAFÉ</h2>
+        <p>Good Coffee. Good Day.</p>
+        <div class="social-icons">
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>All Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#offers">Offers</a></li>
+          <li><a href="#menu">Our Menu</a></li>
+          <li><a href="#login">Login</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      Copy 2026 copy right | CHACO CAFÉ. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // 1. Mobile Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // 2. Hero Image Slider
+    const slides = document.querySelectorAll('.hero-slider .slide');
+    let currentSlide = 0;
+
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 4000);
+
+    // 3. Infinite Scrolling Duplication for Carousels
+    const carouselTrack = document.getElementById('carouselTrack');
+    carouselTrack.innerHTML += carouselTrack.innerHTML; // Duplicate for smooth continuous looping
+
+    const feedbackTrack = document.getElementById('feedbackTrack');
+    feedbackTrack.innerHTML += feedbackTrack.innerHTML;
+
+    // 4. Item Search Filter
+    function filterProducts() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.product-card');
+
+      cards.forEach(card => {
+        const title = card.querySelector('h3').innerText.toLowerCase();
+        const desc = card.querySelector('p').innerText.toLowerCase();
+        if (title.includes(query) || desc.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // 5. Order Redirection Handler
+    function redirectToOrder(itemName) {
+      alert(`Redirecting to order checkout for: ${itemName}`);
+    }
+
+    // 6. Floating Coffee Beans Particle Background Generator
+    const beanContainer = document.getElementById('bean-container');
+    const beanIcons = ['fa-seedling', 'fa-cookie', 'fa-coffee']; // Representative icons for beans/chocos
+
+    for (let i = 0; i < 20; i++) {
+      const bean = document.createElement('i');
+      bean.classList.add('fa-solid', 'fa-coffee', 'floating-bean');
+      bean.style.left = `${Math.random() * 100}%`;
+      bean.style.animationDuration = `${8 + Math.random() * 10}s`;
+      bean.style.animationDelay = `${Math.random() * 5}s`;
+      bean.style.fontSize = `${1 + Math.random() * 1.2}rem`;
+      beanContainer.appendChild(bean);
+    }
+  </script>
+</body>
+</html>
