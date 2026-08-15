@@ -371,7 +371,7 @@
       font-size: 0.95rem;
     }
 
-    /* MENU GRID CARDS (15 CARDS TOTAL) */
+    /* MENU GRID CARDS */
     .menu-grid {
       display: flex;
       flex-direction: column;
@@ -701,6 +701,95 @@
     }
 
     .add-to-list-btn:hover {
+      background: #251204;
+    }
+
+    /* ADDED TO CART CONFIRMATION POPUP MODAL */
+    .success-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .success-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .success-card {
+      background: #fdfbf7;
+      width: 100%;
+      max-width: 320px;
+      border-radius: 24px;
+      padding: 32px 24px 28px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      transform: scale(0.85);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .success-modal-overlay.active .success-card {
+      transform: scale(1);
+    }
+
+    .success-icon-circle {
+      width: 80px;
+      height: 80px;
+      background: #eaf5eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .success-icon-circle i {
+      font-size: 2.2rem;
+      color: #3bb54a;
+    }
+
+    .success-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #2c1a0e;
+      margin-bottom: 10px;
+    }
+
+    .success-message {
+      font-size: 0.88rem;
+      color: #7a6858;
+      line-height: 1.45;
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+
+    .success-ok-btn {
+      width: 100%;
+      background: var(--accent-brown);
+      color: #ffffff;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(59, 30, 8, 0.25);
+      transition: var(--transition);
+      letter-spacing: 0.5px;
+    }
+
+    .success-ok-btn:hover {
       background: #251204;
     }
 
@@ -1035,10 +1124,22 @@
           </div>
         </div>
 
-        <button class="add-to-list-btn" id="addToListBtn" onclick="addToCartAction()">
+        <button class="add-to-list-btn" id="addToListBtn" onclick="openSuccessModal()">
           <i class="fa-solid fa-cart-shopping"></i> Add To List - ₹199
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- ADDED TO CART CONFIRMATION POPUP MODAL -->
+  <div class="success-modal-overlay" id="successModal">
+    <div class="success-card">
+      <div class="success-icon-circle">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 class="success-title">Added to Cart!</h3>
+      <p class="success-message" id="successMsg">Caramel Latte has been added to your cart.</p>
+      <button class="success-ok-btn" onclick="handleOkClick()">OK</button>
     </div>
   </div>
 
@@ -1165,6 +1266,7 @@
     let currentQty = 1;
 
     const productModal = document.getElementById('productModal');
+    const successModal = document.getElementById('successModal');
     const modalCloseBtn = document.getElementById('modalCloseBtn');
     const modalImg = document.getElementById('modalImg');
     const modalTitle = document.getElementById('modalTitle');
@@ -1174,6 +1276,7 @@
     const addToListBtn = document.getElementById('addToListBtn');
     const sizeRegular = document.getElementById('sizeRegular');
     const sizeLarge = document.getElementById('sizeLarge');
+    const successMsg = document.getElementById('successMsg');
 
     function openModal(item) {
       currentItem = item;
@@ -1231,9 +1334,26 @@
       addToListBtn.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Add To List - ₹${totalPrice}`;
     }
 
-    function addToCartAction() {
-      alert(`Added ${currentQty}x ${currentItem.name} (${currentSize}) to list successfully!`);
-      closeModal();
+    // Trigger confirmation popup
+    function openSuccessModal() {
+      if (currentItem) {
+        // Format title to Title Case for text
+        const titleFormatted = currentItem.name.charAt(0).toUpperCase() + currentItem.name.slice(1).toLowerCase();
+        successMsg.textContent = `${titleFormatted} has been added to your cart.`;
+      }
+      successModal.classList.add('active');
+    }
+
+    // Handle OK click to close popups and redirect smooth scroll to cards section
+    function handleOkClick() {
+      successModal.classList.remove('active');
+      productModal.classList.remove('active');
+      
+      // Smooth scroll back to home page cards
+      const menuSection = document.getElementById('menu');
+      if (menuSection) {
+        menuSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 
     // 1. Mobile Menu Toggle
