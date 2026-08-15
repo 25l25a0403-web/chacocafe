@@ -4,22 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CHACO CAFÉ - Good Coffee, Good Day</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
     /* ==========================================
-       COLOR PALETTE & DESIGN SYSTEM (LIGHT THEME)
+       DESIGN SYSTEM & COLOR PALETTE
        ========================================== */
     :root {
-      --bg-main: #fcf9f5;        /* Light Cream Background */
-      --bg-dark: #22150c;        /* Header/Footer Dark Brown */
-      --card-bg: #f5ebe1;        /* Soft Tan for Cards */
-      --accent-color: #dfb282;   /* Login Btn & Highlights */
-      --text-dark: #3b2516;      /* Primary Text */
-      --text-light: #ffffff;     /* White Text */
-      --text-muted: #7a5c48;     /* Secondary Text */
-      --star-color: #f5a623;     /* Yellow Stars */
+      --bg-dark: #160d08;          /* Header & Footer Deep Mocha */
+      --bg-light: #faf6f0;         /* Cream Background */
+      --bg-card: #f3e9dc;          /* Soft Beige Card Background */
+      --accent-brown: #4a2c11;     /* Rich Coffee Brown Text */
+      --btn-gold: #e5a95f;         /* Gold/Tan Accent */
+      --text-dark: #2c1a0e;        /* Primary Body Text */
+      --text-muted: #7a6859;       /* Subtitle Gray/Brown */
+      --star-color: #f4a261;       /* Rating Star Color */
       --transition: all 0.3s ease;
     }
 
@@ -31,24 +33,38 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-main);
+      background-color: var(--bg-light);
       color: var(--text-dark);
       overflow-x: hidden;
+      position: relative;
     }
 
-    /* Floating Beans Background */
+    /* ==========================================
+       FLOATING BEANS ANIMATION (BACKGROUND)
+       ========================================== */
     #bean-container {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 0; overflow: hidden;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
     }
+
     .floating-bean {
-      position: absolute; bottom: -50px; color: #5a3b24; opacity: 0.04;
-      font-size: 1.5rem; animation: floatUp linear infinite;
+      position: absolute;
+      bottom: -40px;
+      color: #8c603e;
+      opacity: 0.15;
+      font-size: 1.2rem;
+      animation: floatUp linear infinite;
     }
+
     @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0.02; }
-      50% { opacity: 0.05; }
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.05; }
+      50% { opacity: 0.25; }
       100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
     }
 
@@ -57,451 +73,937 @@
        ========================================== */
     header {
       position: sticky;
-      top: 0; z-index: 1000;
+      top: 0;
+      z-index: 1000;
       background: var(--bg-dark);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 5%;
+      padding: 0.8rem 5%;
     }
 
     .logo {
-      display: flex; align-items: center; gap: 8px;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem; font-weight: 700;
-      color: var(--text-light); text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
     }
-    .logo img { width: 30px; }
-    .logo span { color: var(--accent-color); }
 
-    .desktop-nav {
-      display: flex; gap: 30px;
+    .logo img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
     }
-    .desktop-nav a {
-      color: var(--text-light);
-      text-decoration: none; font-size: 0.95rem; font-weight: 400;
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .logo-text .title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--btn-gold);
+      letter-spacing: 1.5px;
+    }
+
+    .logo-text .subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      color: #ffffff;
+      letter-spacing: 2px;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
       transition: var(--transition);
     }
-    .desktop-nav a:hover { color: var(--accent-color); }
 
-    .header-right {
-      display: flex; align-items: center; gap: 15px;
+    .nav-links a:hover {
+      color: var(--btn-gold);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .login-btn {
-      padding: 8px 20px;
-      background: var(--accent-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--btn-gold);
       color: var(--bg-dark);
-      border: none; border-radius: 25px;
-      font-weight: 600; font-size: 0.95rem;
-      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      padding: 6px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
       transition: var(--transition);
     }
-    .login-btn:hover { background: #cf9a62; }
 
-    /* Mobile Menu Button - Hidden on Desktop */
-    .menu-btn {
-      display: none;
-      background: transparent; color: var(--text-light);
-      border: none; font-size: 1.5rem; cursor: pointer;
+    .login-btn:hover {
+      background: #d4954b;
     }
 
-    /* Mobile Nav Drawer */
-    #mobileNav {
-      position: fixed; top: 0; right: -100%;
-      width: 250px; height: 100vh;
-      background: var(--bg-dark);
-      display: flex; flex-direction: column;
-      padding: 80px 30px; gap: 20px; z-index: 999;
-      transition: var(--transition);
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 1.2rem;
+      cursor: pointer;
     }
-    #mobileNav.active { right: 0; }
-    #mobileNav a { color: var(--text-light); text-decoration: none; font-size: 1.1rem; }
 
     /* ==========================================
        HERO BANNER
        ========================================== */
     .hero {
-      position: relative; height: 65vh; min-height: 400px;
-      display: flex; align-items: center; justify-content: center;
-      background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1600&q=80');
-      background-size: cover; background-position: center;
+      position: relative;
+      height: 78vh;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      overflow: hidden;
     }
-    .hero::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.4);
+
+    .hero-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
     .hero-content {
-      position: relative; z-index: 2; text-align: center; color: var(--text-light);
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #ffffff;
+      max-width: 800px;
+      padding: 0 20px;
     }
-    .hero-content h3 {
+
+    .hero-content .welcome {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+    }
+
+    .hero-content .welcome span {
       font-family: 'Playfair Display', serif;
-      font-size: 1.8rem; letter-spacing: 2px; font-weight: 600; margin-bottom: -10px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--btn-gold);
+      text-transform: none;
     }
-    .hero-content h3 span { font-style: italic; font-weight: 400; color: var(--accent-color); }
+
     .hero-content h1 {
       font-family: 'Poppins', sans-serif;
-      font-size: 4rem; font-weight: 700; margin-bottom: 10px;
-    }
-    .hero-content p { font-size: 1.1rem; letter-spacing: 1px; }
-
-    .slider-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 40px; height: 40px; background: rgba(255,255,255,0.8);
-      color: var(--bg-dark); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 3; font-size: 1.2rem;
-    }
-    .slider-arrow.left { left: 5%; }
-    .slider-arrow.right { right: 5%; }
-
-    .hero-dots {
-      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 8px; z-index: 3;
-    }
-    .dot { width: 8px; height: 8px; background: #fff; border-radius: 50%; opacity: 0.5; }
-    .dot.active { opacity: 1; background: var(--accent-color); }
-
-    /* ==========================================
-       SECTION CONTAINERS
-       ========================================== */
-    .container {
-      max-width: 1200px; margin: 0 auto; padding: 4rem 5%; position: relative; z-index: 1;
-    }
-    .section-header {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
-    }
-    .section-header h2 {
-      font-size: 1.5rem; font-weight: 700; color: var(--text-dark);
-      display: flex; align-items: center; gap: 10px; margin: 0 auto;
-    }
-    .section-header h2 i { color: #5a3b24; font-size: 1rem; }
-    
-    .view-all-btn {
-      padding: 6px 16px; border: 1px solid var(--text-dark);
-      background: transparent; border-radius: 20px; cursor: pointer;
-      font-weight: 500; font-family: 'Poppins', sans-serif; position: absolute; right: 5%;
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin: 5px 0 10px 0;
+      text-transform: uppercase;
     }
 
-    /* ==========================================
-       OUR BEST ITEMS (CIRCULAR)
-       ========================================== */
-    .best-items-wrapper {
-      position: relative; display: flex; align-items: center; gap: 15px; margin-bottom: 2.5rem;
+    .hero-content p {
+      font-size: 1rem;
+      letter-spacing: 1px;
+      opacity: 0.9;
     }
-    .items-scroll {
-      display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth;
-      padding: 10px 0; flex: 1; scrollbar-width: none;
-    }
-    .items-scroll::-webkit-scrollbar { display: none; }
-    
-    .circle-item {
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      min-width: 140px; cursor: pointer;
-    }
-    .circle-img {
-      width: 140px; height: 140px; border-radius: 50%; overflow: hidden;
-      border: 4px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
       transition: var(--transition);
     }
-    .circle-img img { width: 100%; height: 100%; object-fit: cover; }
-    .circle-item:hover .circle-img { transform: scale(1.05); border-color: var(--accent-color); }
-    .circle-item span { font-weight: 500; color: var(--text-dark); font-size: 0.95rem; }
+
+    .hero-arrow:hover { background: #fff; }
+    .hero-arrow.left { left: 20px; }
+    .hero-arrow.right { right: 20px; }
+
+    .dots-indicator {
+      position: absolute;
+      bottom: 20px;
+      z-index: 3;
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: var(--btn-gold);
+      width: 18px;
+      border-radius: 10px;
+    }
+
+    /* ==========================================
+       SECTIONS GENERAL
+       ========================================== */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 3rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent-brown);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-title i {
+      font-size: 1.2rem;
+      color: var(--accent-brown);
+    }
+
+    /* ==========================================
+       OUR BEST ITEMS & SEARCH
+       ========================================== */
+    .best-items-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .view-all-btn {
+      position: absolute;
+      right: 0;
+      top: -60px;
+      padding: 5px 16px;
+      border: 1px solid var(--accent-brown);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--accent-brown);
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .items-carousel {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      gap: 15px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding: 10px 0;
+    }
+
+    .items-carousel::-webkit-scrollbar { display: none; }
+
+    .cat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      min-width: 130px;
+    }
+
+    .cat-img-wrapper {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #e0d0c0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: var(--transition);
+    }
+
+    .cat-item:hover .cat-img-wrapper {
+      border-color: var(--accent-brown);
+      transform: scale(1.05);
+    }
+
+    .cat-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cat-item span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      text-align: center;
+    }
 
     .nav-arrow {
-      width: 35px; height: 35px; background: var(--bg-dark); color: #fff;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; border: none; flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent-brown);
+      color: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      z-index: 2;
     }
 
-    /* ==========================================
-       SEARCH BAR & FEATURED CARD
-       ========================================== */
     .search-container {
-      position: relative; max-width: 800px; margin: 0 auto 3rem auto;
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto 2.5rem auto;
     }
+
     .search-container input {
-      width: 100%; padding: 15px 25px; border-radius: 30px;
-      border: 1px solid #e0d5cb; background: #fff;
-      font-family: 'Poppins', sans-serif; font-size: 1rem; outline: none;
+      width: 100%;
+      padding: 12px 20px;
+      padding-right: 45px;
+      background: #f7f0e8;
+      border: 1px solid #e2d5c5;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+      color: var(--text-dark);
     }
+
     .search-container i {
-      position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted);
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
     }
 
+    /* Product Highlight Card */
     .featured-card {
-      background: var(--card-bg); border-radius: 20px; overflow: hidden;
-      display: flex; max-width: 900px; margin: 0 auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      background: var(--bg-card);
+      border-radius: 16px;
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+      position: relative;
     }
-    .fc-content {
-      padding: 3rem; flex: 1; display: flex; flex-direction: column; justify-content: center;
-    }
-    .fc-content h3 { font-size: 2rem; font-weight: 700; margin-bottom: 5px; color: var(--text-dark); }
-    .stars { color: var(--star-color); font-size: 0.9rem; margin-bottom: 15px; }
-    .stars span { color: var(--text-muted); margin-left: 5px; font-size: 0.8rem; }
-    .fc-content p { color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; font-size: 0.95rem; }
-    .fc-content .price { font-size: 2rem; font-weight: 700; color: var(--text-dark); margin-bottom: 20px; }
-    
-    .order-btn-dark {
-      background: var(--bg-dark); color: #fff; border: none; padding: 12px 25px;
-      border-radius: 30px; font-weight: 500; cursor: pointer; display: inline-flex;
-      align-items: center; gap: 10px; width: fit-content; transition: var(--transition);
-    }
-    .order-btn-dark:hover { background: #3b2516; }
 
-    .fc-image { flex: 1; min-height: 300px; }
-    .fc-image img { width: 100%; height: 100%; object-fit: cover; }
+    .featured-info {
+      flex: 1;
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .featured-info h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent-brown);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin: 8px 0 15px 0;
+      color: var(--star-color);
+      font-size: 0.85rem;
+    }
+
+    .rating span {
+      color: var(--text-muted);
+      margin-left: 5px;
+      font-size: 0.8rem;
+    }
+
+    .featured-info p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      max-width: 320px;
+      margin-bottom: 20px;
+    }
+
+    .price-tag {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+    }
+
+    .order-now-btn {
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-brown);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .order-now-btn:hover {
+      background: #331e0b;
+    }
+
+    .featured-img {
+      flex: 1.2;
+      position: relative;
+      min-height: 320px;
+    }
+
+    .featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
     /* ==========================================
-       OUR CUSTOMERS WHAT DAY (FEEDBACK)
+       OUR CUSTOMERS WHAT DAY
        ========================================== */
-    .feedback-wrapper {
-      display: flex; align-items: center; gap: 15px;
+    .reviews-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
-    .feedback-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; flex: 1;
+
+    .reviews-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      width: 100%;
+      scrollbar-width: none;
+      padding: 10px 0;
     }
+
+    .reviews-container::-webkit-scrollbar { display: none; }
+
     .review-card {
-      background: #fbf7f2; border: 1px solid #eee4da; border-radius: 15px;
-      padding: 25px; text-align: left;
+      background: #f7f0e8;
+      border: 1px solid #e8dbcc;
+      border-radius: 12px;
+      padding: 20px;
+      min-width: 280px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    .reviewer-info {
-      display: flex; align-items: center; gap: 15px; margin-bottom: 15px;
+
+    .reviewer-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .reviewer-info img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
-    .r-details h5 { font-size: 1rem; color: var(--text-dark); }
-    .review-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+
+    .reviewer-img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .reviewer-info h4 {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+    }
+
+    .review-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .dots-pagination {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 20px;
+    }
+
+    .dots-pagination .dot {
+      background: #d4c4b5;
+    }
+
+    .dots-pagination .dot.active {
+      background: var(--accent-brown);
+    }
 
     /* ==========================================
        FOOTER
        ========================================== */
     footer {
-      background: var(--bg-dark); color: #fff; padding: 4rem 5% 2rem 5%;
-      position: relative; z-index: 1;
+      position: relative;
+      z-index: 1;
+      background: var(--bg-dark);
+      color: #ffffff;
+      padding: 4rem 5% 1.5rem 5%;
     }
+
     .footer-grid {
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 30px; margin-bottom: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 3rem;
     }
-    .footer-brand h3 {
-      font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 5px;
-    }
-    .footer-brand p { font-size: 0.85rem; color: #a9968a; margin-bottom: 20px; }
-    .social-links { display: flex; gap: 12px; }
-    .social-links a {
-      width: 35px; height: 35px; border-radius: 50%; background: var(--accent-color);
-      color: var(--bg-dark); display: flex; align-items: center; justify-content: center;
-      text-decoration: none; transition: var(--transition);
-    }
-    .social-links a:hover { background: #fff; }
 
-    .footer-col h4 { font-size: 1.1rem; margin-bottom: 20px; color: #fff; font-weight: 500; }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 12px; }
-    .footer-col ul li a {
-      color: #a9968a; text-decoration: none; font-size: 0.9rem; transition: var(--transition);
+    .footer-brand .logo-text .subtitle {
+      color: #b5a495;
+      font-size: 0.75rem;
+      margin-top: 3px;
     }
-    .footer-col ul li a:hover { color: var(--accent-color); }
-    
-    .contact-info li {
-      display: flex; gap: 10px; color: #a9968a; font-size: 0.9rem; margin-bottom: 15px;
-    }
-    .contact-info i { margin-top: 4px; color: var(--accent-color); }
 
-    .copyright {
-      text-align: center; color: #a9968a; font-size: 0.85rem;
-      border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;
+    .footer-socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+
+    .footer-socials a {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--btn-gold);
+      color: var(--bg-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: var(--transition);
+    }
+
+    .footer-socials a:hover {
+      transform: translateY(-3px);
+    }
+
+    .footer-column h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 1.2rem;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-column ul li a {
+      color: #b5a495;
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: var(--transition);
+    }
+
+    .footer-column ul li a:hover {
+      color: var(--btn-gold);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #b5a495;
+      font-size: 0.82rem;
+      margin-bottom: 10px;
+    }
+
+    .contact-item i {
+      color: #ffffff;
+      margin-top: 3px;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      font-size: 0.78rem;
+      color: #8c7b6c;
+    }
+
+    /* Mobile Drawer Setup */
+    .mobile-drawer {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background: var(--bg-dark);
+      padding: 20px;
+      flex-direction: column;
+      gap: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      z-index: 999;
+    }
+
+    .mobile-drawer.active {
+      display: flex;
+    }
+
+    .mobile-drawer a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.95rem;
     }
 
     /* ==========================================
-       RESPONSIVE DESIGN
+       RESPONSIVE DESIGN (MATCHING MOBILE MOCKUP)
        ========================================== */
-    @media (max-width: 992px) {
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
-      .featured-card { flex-direction: column-reverse; }
-      .fc-image { min-height: 250px; }
-      .feedback-grid { grid-template-columns: 1fr 1fr; }
     }
-    @media (max-width: 768px) {
-      .desktop-nav { display: none; }
-      .menu-btn { display: block; }
-      .hero-content h1 { font-size: 2.8rem; }
-      .feedback-grid { grid-template-columns: 1fr; }
-      .view-all-btn { position: relative; right: auto; margin-top: 10px; }
-      .section-header { flex-direction: column; }
+
+    @media (max-width: 650px) {
+      header { padding: 0.8rem 15px; }
+      .hero { height: 50vh; min-height: 320px; }
+      .hero-content h1 { font-size: 1.8rem; }
+      .hero-content .welcome { font-size: 0.9rem; }
+      
+      .featured-card {
+        flex-direction: column;
+      }
+      .featured-img {
+        order: -1;
+        min-height: 220px;
+      }
+      .featured-info {
+        padding: 1.5rem;
+      }
+      .featured-info h3 { font-size: 1.2rem; }
+      .price-tag { font-size: 1.4rem; }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Floating Beans -->
+  <!-- Floating Background Beans Container -->
   <div id="bean-container"></div>
 
   <!-- HEADER -->
   <header>
     <a href="#" class="logo">
-      <i class="fa-solid fa-cookie-bite" style="color: var(--accent-color);"></i>
-      <div>CHACO<br><span style="font-size:1rem;font-weight:400;color:#fff;">CAFÉ</span></div>
+      <!-- Standardized Coffee Bean Logo -->
+      <img src="https://cdn-icons-png.flaticon.com/512/751/751621.png" alt="Chaco Cafe Logo" />
+      <div class="logo-text">
+        <span class="title">CHACO</span>
+        <span class="subtitle">CAFÉ</span>
+      </div>
     </a>
-    
-    <nav class="desktop-nav">
-      <a href="#about">About Us</a>
-      <a href="#offers">Offers</a>
-      <a href="#menu">Our Menu</a>
-    </nav>
-    
-    <div class="header-right">
-      <a href="#login" class="login-btn"><i class="fa-regular fa-user"></i> Login</a>
-      <button class="menu-btn" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#offers">Offers</a></li>
+        <li><a href="#menu">Our Menu</a></li>
+      </ul>
+
+      <div class="header-actions">
+        <a href="#login" class="login-btn">
+          <i class="fa-regular fa-user"></i> Login
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Mobile Menu Drawer -->
-  <div id="mobileNav">
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <div class="mobile-drawer" id="mobileDrawer">
     <a href="#about">About Us</a>
     <a href="#offers">Offers</a>
     <a href="#menu">Our Menu</a>
   </div>
 
   <!-- HERO SECTION -->
-  <section class="hero">
-    <div class="slider-arrow left"><i class="fa-solid fa-chevron-left"></i></div>
+  <div class="hero">
+    <button class="hero-arrow left" id="prevSlide"><i class="fa-solid fa-chevron-left"></i></button>
+    
+    <div class="hero-slider">
+      <!-- Background images directly styled to represent the Chaco Cafe Exterior -->
+      <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1600&q=80');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1600&q=80');"></div>
+    </div>
+
     <div class="hero-content">
-      <h3>WELCOME <span style="font-family: 'Playfair Display', serif; text-transform: lowercase;">To</span></h3>
+      <div class="welcome">WELCOME <span>To</span></div>
       <h1>CHACO CAFE</h1>
       <p>Good Coffee, Good Day</p>
     </div>
-    <div class="slider-arrow right"><i class="fa-solid fa-chevron-right"></i></div>
-    <div class="hero-dots">
+
+    <button class="hero-arrow right" id="nextSlide"><i class="fa-solid fa-chevron-right"></i></button>
+
+    <div class="dots-indicator">
       <div class="dot active"></div>
       <div class="dot"></div>
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
-  </section>
+  </div>
 
   <!-- OUR BEST ITEMS -->
-  <div class="container" id="menu">
-    <div class="section-header">
-      <h2><i class="fa-solid fa-seedling"></i> OUR BEST ITEMS <i class="fa-solid fa-seedling"></i></h2>
-      <button class="view-all-btn">View All</button>
+  <section id="menu">
+    <div class="section-title">
+      <i class="fa-solid fa-seedling"></i>
+      OUR BEST ITEMS
+      <i class="fa-solid fa-seedling"></i>
     </div>
 
     <div class="best-items-wrapper">
-      <button class="nav-arrow"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="view-all-btn">View All</button>
+      <button class="nav-arrow left" onclick="scrollCategories(-200)"><i class="fa-solid fa-chevron-left"></i></button>
       
-      <div class="items-scroll">
-        <div class="circle-item">
-          <div class="circle-img"><img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=300&q=80" alt="Cappuccino"></div>
+      <div class="items-carousel" id="catCarousel">
+        <div class="cat-item">
+          <div class="cat-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=400&q=80" alt="Cappuccino" />
+          </div>
           <span>Cappuccino</span>
         </div>
-        <div class="circle-item">
-          <div class="circle-img"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80" alt="Chocolate Cake"></div>
+
+        <div class="cat-item">
+          <div class="cat-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&q=80" alt="Chocolate Cake" />
+          </div>
           <span>Chocolate Cake</span>
         </div>
-        <div class="circle-item">
-          <div class="circle-img"><img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=300&q=80" alt="Iced Coffee"></div>
+
+        <div class="cat-item">
+          <div class="cat-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=400&q=80" alt="Iced Coffee" />
+          </div>
           <span>Iced Coffee</span>
         </div>
-        <div class="circle-item">
-          <div class="circle-img"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=300&q=80" alt="Cheese Sandwich"></div>
+        <div class="cat-item">
+          <div class="cat-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80" alt="Cheese Sandwich" />
+          </div>
           <span>Cheese Sandwich</span>
         </div>
-        <div class="circle-item">
-          <div class="circle-img"><img src="https://images.unsplash.com/photo-1461023058943-0708e52e50d5?auto=format&fit=crop&w=300&q=80" alt="Caramel Latte"></div>
+
+        <div class="cat-item">
+          <div class="cat-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=400&q=80" alt="Caramel Latte" />
+          </div>
           <span>Caramel Latte</span>
         </div>
       </div>
 
-      <button class="nav-arrow"><i class="fa-solid fa-chevron-right"></i></button>
+      <button class="nav-arrow right" onclick="scrollCategories(200)"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
 
-    <!-- Search Bar -->
+    <!-- SEARCH BAR -->
     <div class="search-container">
       <input type="text" placeholder="Search your favorite.." />
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
 
-    <!-- Featured Product Card -->
+    <!-- FEATURED PRODUCT CARD -->
     <div class="featured-card">
-      <div class="fc-content">
+      <div class="featured-info">
         <h3>CARAMEL LATTE</h3>
-        <div class="stars">
-          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <div class="rating">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
           <span>(128)</span>
         </div>
         <p>Smooth espresso with steamed milk and rich caramel flavor.</p>
-        <div class="price">₹199</div>
-        <button class="order-btn-dark"><i class="fa-solid fa-cart-shopping"></i> Order Now</button>
+        <div class="price-tag">₹199</div>
+        <button class="order-now-btn">
+          <i class="fa-solid fa-cart-shopping"></i> Order Now
+        </button>
       </div>
-      <div class="fc-image">
-        <img src="https://images.unsplash.com/photo-1461023058943-0708e52e50d5?auto=format&fit=crop&w=600&q=80" alt="Caramel Latte Feature">
+      <div class="featured-img">
+        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80" alt="Caramel Latte" />
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- OUR CUSTOMERS WHAT DAY -->
-  <div class="container" id="feedback">
-    <div class="section-header" style="justify-content: center;">
-      <h2><i class="fa-solid fa-seedling"></i> OUR CUSTOMERS WHAT DAY <i class="fa-solid fa-seedling"></i></h2>
+  <section id="offers">
+    <div class="section-title">
+      <i class="fa-solid fa-seedling"></i>
+      OUR CUSTOMERS WHAT DAY
+      <i class="fa-solid fa-seedling"></i>
     </div>
 
-    <div class="feedback-wrapper">
-      <button class="nav-arrow"><i class="fa-solid fa-chevron-left"></i></button>
+    <div class="reviews-wrapper">
+      <button class="nav-arrow left" onclick="scrollReviews(-250)"><i class="fa-solid fa-chevron-left"></i></button>
       
-      <div class="feedback-grid">
+      <div class="reviews-container" id="reviewsContainer">
+        
         <div class="review-card">
-          <div class="reviewer-info">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="Priya">
-            <div class="r-details">
-              <h5>Priya Sharma</h5>
-              <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <div class="reviewer-header">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" class="reviewer-img" alt="Priya Sharma" />
+            <div class="reviewer-info">
+              <h4>Priya Sharma</h4>
+              <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
             </div>
           </div>
           <p>Amazing ambiance and even better coffee! Chaco Cafe is my new favorite place.</p>
         </div>
 
         <div class="review-card">
-          <div class="reviewer-info">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Rohit">
-            <div class="r-details">
-              <h5>Rohit Verma</h5>
-              <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <div class="reviewer-header">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" class="reviewer-img" alt="Rohit Verma" />
+            <div class="reviewer-info">
+              <h4>Rohit Verma</h4>
+              <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
             </div>
           </div>
           <p>Delicious food, great service and cozy vibe. Highly recommended!</p>
         </div>
 
         <div class="review-card">
-          <div class="reviewer-info">
-            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" alt="Ananya">
-            <div class="r-details">
-              <h5>Ananya Gupta</h5>
-              <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+          <div class="reviewer-header">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&q=80" class="reviewer-img" alt="Ananya Gupta" />
+            <div class="reviewer-info">
+              <h4>Ananya Gupta</h4>
+              <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
             </div>
           </div>
           <p>Loved the chocolate cake and cappuccino. Will come again for sure!</p>
         </div>
+
       </div>
-      
-      <button class="nav-arrow"><i class="fa-solid fa-chevron-right"></i></button>
+
+      <button class="nav-arrow right" onclick="scrollReviews(250)"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
-    
-    <div class="hero-dots" style="position: relative; bottom: 0; margin-top: 2rem;">
-      <div class="dot active" style="background:#3b2516;"></div>
-      <div class="dot" style="background:#a9968a;"></div>
-      <div class="dot" style="background:#a9968a;"></div>
-      <div class="dot" style="background:#a9968a;"></div>
+
+    <div class="dots-pagination">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
     </div>
-  </div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-grid">
       <div class="footer-brand">
-        <h3><i class="fa-solid fa-cookie-bite" style="color: var(--accent-color);"></i> CHACO CAFÉ</h3>
-        <p>Good Coffee, Good Day</p>
-        <div class="social-links">
+        <a href="#" class="logo">
+          <img src="https://cdn-icons-png.flaticon.com/512/751/751621.png" alt="Chaco Cafe Logo" />
+          <div class="logo-text">
+            <span class="title">CHACO</span>
+            <span class="subtitle">CAFÉ</span>
+          </div>
+        </a>
+        <div class="logo-text">
+          <span class="subtitle" style="margin-top: 8px;">Good Coffee, Good Day</span>
+        </div>
+        <div class="footer-socials">
           <a href="#"><i class="fa-brands fa-instagram"></i></a>
           <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
           <a href="#"><i class="fa-brands fa-twitter"></i></a>
@@ -509,18 +1011,18 @@
         </div>
       </div>
 
-      <div class="footer-col">
+      <div class="footer-column">
         <h4>QUICK LINKS</h4>
         <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Our Menu</a></li>
-          <li><a href="#">Offers</a></li>
-          <li><a href="#">Order Now</a></li>
-          <li><a href="#">Contact Us</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#menu">Our Menu</a></li>
+          <li><a href="#offers">Offers</a></li>
+          <li><a href="#order">Order Now</a></li>
+          <li><a href="#contact">Contact Us</a></li>
         </ul>
       </div>
 
-      <div class="footer-col">
+      <div class="footer-column">
         <h4>INFORMATION</h4>
         <ul>
           <li><a href="#">Privacy Policy</a></li>
@@ -531,40 +1033,79 @@
         </ul>
       </div>
 
-      <div class="footer-col">
+      <div class="footer-column">
         <h4>CONTACT US</h4>
-        <ul class="contact-info">
-          <li><i class="fa-solid fa-phone"></i> +91 98765 43210</li>
-          <li><i class="fa-solid fa-envelope"></i> hello@chacocafe.com</li>
-          <li><i class="fa-solid fa-location-dot"></i> 123, Coffee Street, Bangalore, India</li>
-        </ul>
+        <div class="contact-item">
+          <i class="fa-solid fa-phone"></i>
+          <span>+91 98765 43210</span>
+        </div>
+        <div class="contact-item">
+          <i class="fa-regular fa-envelope"></i>
+          <span>hello@chacocafe.com</span>
+        </div>
+        <div class="contact-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>123, Coffee Street, Bangalore, India</span>
+        </div>
       </div>
     </div>
-    
-    <div class="copyright">
+
+    <div class="footer-bottom">
       © 2026 CHACO CAFE. All Rights Reserved.
     </div>
   </footer>
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    // Mobile Nav Toggle
+    // 1. Mobile Menu Drawer Toggle
     const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
+    const mobileDrawer = document.getElementById('mobileDrawer');
 
     menuToggle.addEventListener('click', () => {
-      mobileNav.classList.toggle('active');
+      mobileDrawer.classList.toggle('active');
     });
 
-    // Floating Coffee Beans Particles (Subtle for light theme)
+    // 2. Hero Slider Functionality
+    const slides = document.querySelectorAll('.hero-slider .slide');
+    const prevBtn = document.getElementById('prevSlide');
+    const nextBtn = document.getElementById('nextSlide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    nextBtn.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    });
+
+    // 3. Category & Review Carousel Manual Controls
+    function scrollCategories(amount) {
+      document.getElementById('catCarousel').scrollBy({ left: amount, behavior: 'smooth' });
+    }
+
+    function scrollReviews(amount) {
+      document.getElementById('reviewsContainer').scrollBy({ left: amount, behavior: 'smooth' });
+    }
+
+    // 4. Background Floating Beans Particle System
     const beanContainer = document.getElementById('bean-container');
+
     for (let i = 0; i < 15; i++) {
       const bean = document.createElement('i');
-      bean.classList.add('fa-solid', 'fa-seedling', 'floating-bean');
+      bean.classList.add('fa-solid', 'fa-coffee', 'floating-bean');
       bean.style.left = `${Math.random() * 100}%`;
-      bean.style.animationDuration = `${10 + Math.random() * 15}s`;
+      bean.style.animationDuration = `${10 + Math.random() * 10}s`;
       bean.style.animationDelay = `${Math.random() * 5}s`;
-      bean.style.fontSize = `${1 + Math.random() * 1}rem`;
+      bean.style.fontSize = `${0.8 + Math.random() * 1}rem`;
       beanContainer.appendChild(bean);
     }
   </script>
