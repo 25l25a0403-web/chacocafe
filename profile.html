@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chaco Café - Authentication & Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FAF7F2; }
+    .bg-brand { background-color: #3C2317; }
+    .text-brand { color: #3C2317; }
+    .border-brand { border-color: #3C2317; }
+    .bg-brand-light { background-color: #F7EFE5; }
+    .bg-brand-accent { background-color: #D4A373; }
+  </style>
+</head>
+<body class="min-h-screen text-gray-800">
+
+  <!-- ================= 1. LOGIN PAGE ================= -->
+  <div id="login-screen" class="min-h-screen flex flex-col justify-between items-center p-6 relative">
+    <div class="w-full max-w-md">
+      <!-- Back Arrow -->
+      <button class="w-10 h-10 rounded-full bg-stone-200/60 flex items-center justify-center text-stone-700 hover:bg-stone-300 transition mb-6">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+
+      <!-- Logo & Header -->
+      <div class="text-center my-6">
+        <div class="flex justify-center mb-3">
+          <div class="w-16 h-16 bg-[#3C2317] rounded-full flex items-center justify-center text-amber-100 text-3xl">
+            <i class="fa-solid fa-coffee"></i>
+          </div>
+        </div>
+        <h1 class="text-3xl font-bold tracking-tight text-[#3C2317]">CHACO CAFÉ</h1>
+        <p class="text-sm font-medium text-stone-500 tracking-widest mt-1 uppercase">— Café —</p>
+        <p class="text-stone-500 italic mt-3 text-sm">Good Coffee, Good Day</p>
+      </div>
+
+      <div class="text-center my-8">
+        <h2 class="text-xl font-bold text-stone-800">Login to your account</h2>
+        <p class="text-xs text-stone-500 mt-1">Welcome back! Please login to continue.</p>
+      </div>
+
+      <!-- Google Login Button -->
+      <button onclick="openGoogleAuthModal()" class="w-full bg-white border border-stone-200 hover:bg-stone-50 text-stone-700 font-semibold py-3.5 px-4 rounded-xl flex items-center justify-center gap-3 shadow-sm transition mb-6">
+        <svg class="w-5 h-5" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Continue with Google</span>
+      </button>
+
+      <!-- Divider -->
+      <div class="relative flex py-2 items-center mb-6">
+        <div class="flex-grow border-t border-stone-200"></div>
+        <span class="flex-shrink mx-4 text-xs font-semibold text-stone-400 bg-[#FAF7F2] px-2 rounded-full border border-stone-200">OR</span>
+        <div class="flex-grow border-t border-stone-200"></div>
+      </div>
+
+      <!-- Mobile Login Form -->
+      <form onsubmit="handleMobileSubmit(event)" class="space-y-4">
+        <div class="flex bg-white border border-stone-200 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-[#3C2317]">
+          <div class="bg-stone-100 p-3.5 text-stone-500 border-r border-stone-200 flex items-center justify-center">
+            <i class="fa-solid fa-phone text-stone-600"></i>
+          </div>
+          <div class="flex items-center px-3 border-r border-stone-200 bg-stone-50 font-medium text-stone-700 text-sm">
+            +91 <i class="fa-solid fa-chevron-down text-xs ml-1 text-stone-400"></i>
+          </div>
+          <input type="tel" id="mobile-input" required pattern="[0-9]{10}" placeholder="Enter mobile number" class="w-full p-3.5 outline-none text-stone-800 placeholder-stone-400 text-sm">
+        </div>
+
+        <button type="submit" class="w-full bg-[#3C2317] hover:bg-[#2A1810] text-white font-semibold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-md">
+          <span>Continue with Mobile</span>
+          <i class="fa-solid fa-chevron-right text-xs"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Security Footer -->
+    <div class="mt-8 text-center text-xs text-stone-400 flex items-center justify-center gap-1.5">
+      <i class="fa-solid fa-shield-halved text-stone-400"></i>
+      <span>Your data is safe and secure with us.</span>
+    </div>
+  </div>
+
+
+  <!-- ================= 2. OTP MODAL POPUP ================= -->
+  <div id="otp-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center relative shadow-2xl animate-fade-in">
+      <button onclick="closeModal('otp-modal')" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-stone-100 text-stone-500 hover:bg-stone-200 flex items-center justify-center">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="w-20 h-20 bg-amber-100/60 rounded-full flex items-center justify-center mx-auto mb-4 relative">
+        <i class="fa-solid fa-mobile-screen-button text-3xl text-[#3C2317]"></i>
+        <span class="absolute top-4 right-4 bg-[#3C2317] text-white text-[10px] px-1 rounded">***</span>
+      </div>
+
+      <h3 class="text-2xl font-bold text-stone-800">Enter OTP</h3>
+      <p class="text-xs text-stone-500 mt-2">We have sent a 6-digit OTP to</p>
+      <p id="target-phone" class="font-bold text-stone-800 text-base mt-0.5">+91 98765 43210</p>
+
+      <!-- OTP Inputs -->
+      <div class="flex justify-center gap-2 my-6" id="otp-container">
+        <input type="text" maxlength="1" class="otp-input w-10 h-12 border-2 border-stone-200 rounded-xl text-center text-lg font-bold focus:border-[#3C2317] outline-none" value="1">
+        <input type="text" maxlength="1" class="otp-input w-10 h-12 border-2 border-stone-200 rounded-xl text-center text-lg font-bold focus:border-[#3C2317] outline-none" value="2">
+        <input type="text" maxlength="1" class="otp-input w-10 h-12 border-2 border-stone-200 rounded-xl text-center text-lg font-bold focus:border-[#3C2317] outline-none" value="3">
+        <input type="text" maxlength="1" class="otp-input w-10 h-12 border-2 border-stone-200 rounded-xl text-center text-lg font-bold focus:border-[#3C2317] outline-none" value="4">
+        <input type="text" maxlength="1" class="otp-input w-10 h-12 border-2 border-stone-200 rounded-xl text-center text-lg font-bold focus:border-[#3C2317] outline-none" value="5">
+        <input type="text" maxlength="1" class="otp-input w-10 h-12 border-2 border-stone-200 rounded-xl text-center text-lg font-bold focus:border-[#3C2317] outline-none" value="6">
+      </div>
+
+      <p class="text-xs text-stone-500 mb-6">Resend OTP in <span id="timer" class="text-[#3C2317] font-bold">00:28</span></p>
+
+      <button onclick="verifyOTP()" class="w-full bg-[#3C2317] hover:bg-[#2A1810] text-white font-semibold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-md">
+        <span>Verify OTP</span>
+        <i class="fa-solid fa-arrow-right text-sm"></i>
+      </button>
+
+      <button onclick="closeModal('otp-modal')" class="mt-4 text-xs font-semibold text-stone-600 hover:text-stone-900 flex items-center justify-center gap-2 mx-auto">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Change mobile number</span>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ================= 3. GOOGLE ACCOUNT SELECTOR MODAL ================= -->
+  <div id="google-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 relative shadow-2xl">
+      <div class="flex items-center justify-between pb-4 border-b border-stone-100">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+          <span class="font-semibold text-stone-700 text-sm">Choose an account</span>
+        </div>
+        <button onclick="closeModal('google-modal')" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <p class="text-xs text-stone-500 my-3">to continue to <strong class="text-stone-800">Chaco Café</strong></p>
+
+      <div class="space-y-2" id="google-accounts-list">
+        <!-- Dynamic accounts populated by JS -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= 4. DASHBOARD PAGE ================= -->
+  <div id="dashboard-screen" class="hidden min-h-screen flex bg-[#FAF7F2]">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-[#23150D] text-stone-300 flex flex-col justify-between hidden md:flex min-h-screen sticky top-0">
+      <div>
+        <div class="p-6 flex items-center gap-3 border-b border-stone-800">
+          <div class="w-10 h-10 bg-[#3C2317] rounded-full flex items-center justify-center text-amber-100">
+            <i class="fa-solid fa-coffee text-xl"></i>
+          </div>
+          <div>
+            <h2 class="font-bold text-white tracking-wider text-sm">CHACO CAFÉ</h2>
+          </div>
+        </div>
+
+        <nav class="p-4 space-y-1 text-sm font-medium">
+          <a href="#" class="flex items-center gap-3 px-4 py-3 bg-[#3C2317] text-white rounded-xl"><i class="fa-solid fa-house w-5"></i> Dashboard</a>
+          <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-stone-800 text-stone-400 hover:text-white rounded-xl transition"><i class="fa-solid fa-mug-hot w-5"></i> Order Now</a>
+          <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-stone-800 text-stone-400 hover:text-white rounded-xl transition"><i class="fa-solid fa-bag-shopping w-5"></i> My Orders</a>
+          <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-stone-800 text-stone-400 hover:text-white rounded-xl transition"><i class="fa-solid fa-heart w-5"></i> Favorites</a>
+          <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-stone-800 text-stone-400 hover:text-white rounded-xl transition"><i class="fa-solid fa-location-dot w-5"></i> Addresses</a>
+          <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-stone-800 text-stone-400 hover:text-white rounded-xl transition"><i class="fa-solid fa-credit-card w-5"></i> Payment Methods</a>
+          <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-stone-800 text-stone-400 hover:text-white rounded-xl transition"><i class="fa-solid fa-tag w-5"></i> Offers</a>
+          <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-stone-800 text-stone-400 hover:text-white rounded-xl transition"><i class="fa-solid fa-user w-5"></i> Profile</a>
+        </nav>
+      </div>
+
+      <div class="p-4 border-t border-stone-800">
+        <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-3 text-stone-400 hover:text-white hover:bg-stone-800 rounded-xl transition text-sm font-medium">
+          <i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-4 md:p-8 max-w-7xl mx-auto">
+      
+      <!-- Top Navbar -->
+      <header class="flex items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-stone-800 flex items-center gap-2">
+            Welcome back, <span id="dash-user-name">Vikram</span>! 👋
+          </h1>
+          <p class="text-xs text-stone-500">Good Coffee, Good Day.</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="relative hidden sm:block">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-stone-400 text-xs"></i>
+            <input type="text" placeholder="Search for coffee, food..." class="bg-white border border-stone-200 rounded-full pl-8 pr-4 py-2 text-xs w-64 focus:outline-none focus:ring-1 focus:ring-[#3C2317]">
+          </div>
+
+          <button class="w-9 h-9 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-600 relative">
+            <i class="fa-solid fa-cart-shopping text-sm"></i>
+            <span class="absolute -top-1 -right-1 bg-[#3C2317] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+          </button>
+
+          <button class="w-9 h-9 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-600 relative">
+            <i class="fa-solid fa-bell text-sm"></i>
+            <span class="absolute -top-1 -right-1 bg-amber-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">3</span>
+          </button>
+
+          <img id="dash-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-[#3C2317] object-cover">
+        </div>
+      </header>
+
+      <!-- Key Metrics Row -->
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white p-4 rounded-2xl border border-stone-100 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-medium text-stone-400">Total Orders</p>
+            <p id="dash-orders" class="text-2xl font-bold text-stone-800 mt-1">0</p>
+            <p class="text-[10px] text-stone-400 mt-1">All Time Orders <i class="fa-solid fa-arrow-right"></i></p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-700 flex items-center justify-center">
+            <i class="fa-solid fa-bag-shopping"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-stone-100 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-medium text-stone-400">Total Spent</p>
+            <p id="dash-spent" class="text-2xl font-bold text-stone-800 mt-1">₹0</p>
+            <p class="text-[10px] text-stone-400 mt-1">All Time <i class="fa-solid fa-arrow-right"></i></p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+            <i class="fa-solid fa-wallet"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-stone-100 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-medium text-stone-400">Reward Points</p>
+            <p id="dash-points" class="text-2xl font-bold text-stone-800 mt-1">0</p>
+            <p class="text-[10px] text-stone-400 mt-1">Available Points <i class="fa-solid fa-arrow-right"></i></p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-stone-100 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-medium text-stone-400">Member Since</p>
+            <p id="dash-member-since" class="text-base font-bold text-stone-800 mt-2">Jan 2025</p>
+            <p id="dash-member-tenure" class="text-[10px] text-stone-400 mt-1">Active Member <i class="fa-solid fa-arrow-right"></i></p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center">
+            <i class="fa-solid fa-crown"></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- Banner -->
+      <section class="relative bg-gradient-to-r from-[#23150D] to-[#4A2E1F] text-white rounded-3xl p-6 md:p-8 mb-8 overflow-hidden shadow-lg flex flex-col md:flex-row items-center justify-between">
+        <div class="z-10 max-w-md">
+          <h2 class="text-2xl md:text-3xl font-serif italic mb-2">Brewed to Perfection, Just for You.</h2>
+          <p class="text-xs text-amber-200/80 mb-6">Enjoy premium coffee & delicious bites delivered fast.</p>
+          <button class="bg-amber-200 text-[#23150D] font-bold px-5 py-2.5 rounded-xl text-xs hover:bg-white transition shadow-sm">Order Now</button>
+        </div>
+        <div class="mt-4 md:mt-0">
+          <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=300&q=80" alt="Coffee" class="w-40 h-40 object-cover rounded-2xl border-4 border-white/10 shadow-md">
+        </div>
+      </section>
+
+      <!-- Recent Orders Section -->
+      <section class="mb-8">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-bold text-stone-800 text-base">Your Recent Orders</h3>
+          <a href="#" class="text-xs font-semibold text-stone-500 hover:text-stone-800">View All</a>
+        </div>
+
+        <div id="recent-orders-list" class="space-y-3">
+          <!-- Dynamic order items populated by JS -->
+        </div>
+      </section>
+
+      <!-- Mobile Logout button -->
+      <div class="md:hidden mt-8 text-center">
+        <button onclick="logout()" class="w-full bg-stone-200 text-stone-700 font-bold py-3 rounded-xl">Logout</button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ================= JavaScript Application Logic ================= -->
+  <script>
+    // Sample Database of Registered Accounts
+    const usersDatabase = {
+      // Keyed by Mobile or Email
+      "9876543210": {
+        name: "Vikram Sharma",
+        email: "vikram@gmail.com",
+        phone: "+91 98765 43210",
+        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80",
+        ordersCount: 24,
+        spent: "₹4,350",
+        points: 245,
+        memberSince: "May 2024",
+        tenure: "1 Year With Us",
+        orders: [
+          { name: "Caramel Latte", detail: "Large • Hot • 1 Pc", price: "₹199", status: "Delivered", date: "10 May 2025", img: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=100&q=80" },
+          { name: "Cheese Sandwich", detail: "1 Pc", price: "₹149", status: "Delivered", date: "08 May 2025", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=100&q=80" },
+          { name: "Iced Coffee", detail: "Regular • Cold • 1 Pc", price: "₹159", status: "Delivered", date: "06 May 2025", img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=100&q=80" }
+        ]
+      },
+      "alex@gmail.com": {
+        name: "Alex Morgan",
+        email: "alex@gmail.com",
+        phone: "+91 91234 56789",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80",
+        ordersCount: 12,
+        spent: "₹2,100",
+        points: 110,
+        memberSince: "Jan 2025",
+        tenure: "6 Months With Us",
+        orders: [
+          { name: "Cappuccino", detail: "Regular • Hot • 2 Pcs", price: "₹298", status: "Delivered", date: "14 Aug 2025", img: "https://images.unsplash.com/photo-1572442388796-11668ba67e53?auto=format&fit=crop&w=100&q=80" },
+          { name: "Chocolate Cake", detail: "1 Slice", price: "₹179", status: "Delivered", date: "12 Aug 2025", img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=100&q=80" }
+        ]
+      }
+    };
+
+    let currentUser = null;
+
+    // --- Mobile & OTP Flow ---
+    function handleMobileSubmit(e) {
+      e.preventDefault();
+      const mobileVal = document.getElementById('mobile-input').value;
+      
+      // Update phone display in modal
+      document.getElementById('target-phone').innerText = `+91 ${mobileVal}`;
+      
+      // Trigger OTP Modal
+      document.getElementById('otp-modal').classList.remove('hidden');
+      
+      // Check if user exists in DB, otherwise create a mock record
+      if (usersDatabase[mobileVal]) {
+        currentUser = usersDatabase[mobileVal];
+      } else {
+        currentUser = {
+          name: "Guest User",
+          email: "user@chacocafe.com",
+          phone: `+91 ${mobileVal}`,
+          avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80",
+          ordersCount: 1,
+          spent: "₹199",
+          points: 20,
+          memberSince: "Today",
+          tenure: "New Member",
+          orders: [
+            { name: "Welcome Cold Coffee", detail: "Regular • 1 Pc", price: "₹199", status: "Delivered", date: "Today", img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=100&q=80" }
+          ]
+        };
+      }
+    }
+
+    function verifyOTP() {
+      closeModal('otp-modal');
+      renderDashboard(currentUser);
+    }
+
+    // --- Google Auth Flow ---
+    function openGoogleAuthModal() {
+      const container = document.getElementById('google-accounts-list');
+      container.innerHTML = `
+        <div onclick="selectGoogleUser('9876543210')" class="flex items-center gap-3 p-3 hover:bg-stone-50 rounded-xl cursor-pointer transition border border-transparent hover:border-stone-200">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80" class="w-9 h-9 rounded-full object-cover">
+          <div>
+            <p class="text-xs font-bold text-stone-800">Vikram Sharma</p>
+            <p class="text-[11px] text-stone-500">vikram@gmail.com</p>
+          </div>
+        </div>
+        <div onclick="selectGoogleUser('alex@gmail.com')" class="flex items-center gap-3 p-3 hover:bg-stone-50 rounded-xl cursor-pointer transition border border-transparent hover:border-stone-200">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" class="w-9 h-9 rounded-full object-cover">
+          <div>
+            <p class="text-xs font-bold text-stone-800">Alex Morgan</p>
+            <p class="text-[11px] text-stone-500">alex@gmail.com</p>
+          </div>
+        </div>
+      `;
+      document.getElementById('google-modal').classList.remove('hidden');
+    }
+
+    function selectGoogleUser(key) {
+      currentUser = usersDatabase[key];
+      closeModal('google-modal');
+      renderDashboard(currentUser);
+    }
+
+    // --- Render Dashboard with Specific User Data ---
+    function renderDashboard(user) {
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('dashboard-screen').classList.remove('hidden');
+
+      // Populate user info
+      document.getElementById('dash-user-name').innerText = user.name;
+      document.getElementById('dash-avatar').src = user.avatar;
+      document.getElementById('dash-orders').innerText = user.ordersCount;
+      document.getElementById('dash-spent').innerText = user.spent;
+      document.getElementById('dash-points').innerText = user.points;
+      document.getElementById('dash-member-since').innerText = user.memberSince;
+      document.getElementById('dash-member-tenure').innerText = user.tenure;
+
+      // Populate orders list
+      const ordersContainer = document.getElementById('recent-orders-list');
+      ordersContainer.innerHTML = user.orders.map(order => `
+        <div class="bg-white p-3.5 rounded-2xl border border-stone-100 flex items-center justify-between shadow-sm">
+          <div class="flex items-center gap-3">
+            <img src="${order.img}" class="w-12 h-12 rounded-xl object-cover">
+            <div>
+              <h4 class="font-bold text-xs text-stone-800">${order.name}</h4>
+              <p class="text-[11px] text-stone-400 mt-0.5">${order.detail}</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="font-bold text-xs text-stone-800">${order.price}</span>
+            <div class="flex items-center gap-1 text-[10px] text-emerald-600 font-semibold mt-1">
+              <i class="fa-solid fa-circle-check"></i> ${order.status}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // --- Helpers ---
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function logout() {
+      document.getElementById('dashboard-screen').classList.add('hidden');
+      document.getElementById('login-screen').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
