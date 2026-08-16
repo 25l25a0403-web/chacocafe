@@ -1225,9 +1225,7 @@
 
     .payment-btn:hover { background: #1a0b03; }
 
-    /* ----------------------------------------------------
-       ORDER CONFIRMED ANIMATED TICK POPUP MODAL (NEW)
-    ---------------------------------------------------- */
+    /* ORDER CONFIRMED ANIMATED TICK POPUP MODAL */
     .order-success-overlay {
       position: fixed;
       inset: 0;
@@ -1408,8 +1406,244 @@
       text-decoration: underline;
       text-underline-offset: 4px;
     }
-    
-    
+
+    /* ----------------------------------------------------
+       NEW TRACK ORDER BOTTOM SHEET OVERLAY
+    ---------------------------------------------------- */
+    .track-sheet-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 7000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .track-sheet-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .track-sheet {
+      background: #faf6f0;
+      width: 100%;
+      max-width: 480px;
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+      position: relative;
+      padding: 12px 20px 24px 20px;
+    }
+
+    .track-sheet-overlay.active .track-sheet {
+      transform: translateY(0);
+    }
+
+    .track-drag-handle {
+      width: 48px;
+      height: 5px;
+      background: #dfd3c3;
+      border-radius: 3px;
+      margin: 4px auto 16px auto;
+    }
+
+    .track-sheet-header {
+      position: relative;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .track-sheet-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #2c1a0e;
+      letter-spacing: 0.5px;
+    }
+
+    .track-sheet-close {
+      position: absolute;
+      right: 0;
+      top: -4px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #efe4d8;
+      border: none;
+      color: #2c1a0e;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .track-order-id {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #7a6858;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    /* Timeline Stepper Container */
+    .timeline-container {
+      position: relative;
+      padding: 0 10px;
+      margin-bottom: 24px;
+    }
+
+    .timeline-step {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      min-height: 96px;
+    }
+
+    .timeline-left {
+      display: flex;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .timeline-icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1.5px solid #e0d5c8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: #6b5849;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .timeline-step.completed .timeline-icon-circle,
+    .timeline-step.active .timeline-icon-circle {
+      border-color: #34a853;
+      color: #34a853;
+    }
+
+    .timeline-step.preparing .timeline-icon-circle {
+      border-color: #e5a95f;
+      color: #e5a95f;
+    }
+
+    .step-check-badge {
+      position: absolute;
+      top: 14px;
+      right: -14px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #34a853;
+      color: #fff;
+      font-size: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #faf6f0;
+    }
+
+    .step-check-badge.active-dot {
+      background: #34a853;
+    }
+
+    .step-check-badge.active-orange {
+      background: #e5a95f;
+    }
+
+    .timeline-text {
+      padding-top: 2px;
+      max-width: 170px;
+    }
+
+    .timeline-text h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #2c1a0e;
+      margin-bottom: 2px;
+    }
+
+    .timeline-text p {
+      font-size: 0.76rem;
+      color: #7a6858;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .timeline-timestamp {
+      font-size: 0.75rem;
+      color: #9c8a7b;
+      font-weight: 500;
+    }
+
+    .timeline-right-img {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      position: relative;
+      z-index: 2;
+    }
+
+    .timeline-right-img img {
+      height: 72px;
+      object-fit: contain;
+    }
+
+    .tag-badge {
+      background: #f1e5d7;
+      color: #594436;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    /* Dashed Connecting Line */
+    .timeline-connector {
+      position: absolute;
+      left: 72px;
+      width: 2px;
+      border-left: 2px dashed #bfa895;
+      z-index: 1;
+    }
+
+    .conn-1 { top: 30px; height: 90px; }
+    .conn-2 { top: 125px; height: 90px; }
+    .conn-3 { top: 220px; height: 90px; }
+
+    .track-footer-support {
+      border-top: 1px solid #efe4d8;
+      padding-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #2c1a0e;
+      cursor: pointer;
+    }
+
+    .track-footer-support i {
+      font-size: 1rem;
+    }
 
     /* REVIEWS */
     .reviews-container {
@@ -1548,7 +1782,6 @@
   </style>
 </head>
 <body>
-
   <!-- Floating Beans Background -->
   <div id="bean-container"></div>
 
@@ -1919,14 +2152,114 @@
         <div class="info-value-time">20 – 30 mins</div>
       </div>
 
-      <button class="track-order-btn" onclick="resetAndCloseAll()">
+      <!-- Track Order button now opens the track sheet -->
+      <button class="track-order-btn" onclick="openTrackSheet()">
         <i class="fa-solid fa-location-dot"></i> Track Order
       </button>
 
       <button class="back-home-link" onclick="resetAndCloseAll()">Back to Home</button>
     </div>
   </div>
-  
+
+  <!-- TRACK ORDER BOTTOM SHEET DRAWER -->
+  <div class="track-sheet-overlay" id="trackSheetOverlay">
+    <div class="track-sheet">
+      <div class="track-drag-handle"></div>
+      
+      <div class="track-sheet-header">
+        <h3 class="track-sheet-title">TRACK ORDER</h3>
+        <button class="track-sheet-close" onclick="closeTrackSheet()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="track-order-id" id="trackSheetOrderId">Order ID #CC20250601</div>
+
+      <!-- Timeline Tracking List -->
+      <div class="timeline-container">
+        <!-- Connecting Line -->
+        <div class="timeline-connector conn-1"></div>
+        <div class="timeline-connector conn-2"></div>
+        <div class="timeline-connector conn-3"></div>
+
+        <!-- Step 1: Accepted -->
+        <div class="timeline-step completed">
+          <div class="timeline-left">
+            <div class="timeline-icon-circle">
+              <i class="fa-solid fa-check"></i>
+              <div class="step-check-badge active-dot"><i class="fa-solid fa-circle"></i></div>
+            </div>
+            <div class="timeline-text">
+              <h4>Accepted your order</h4>
+              <p>We've received your order.</p>
+              <div class="timeline-timestamp">09:41 AM</div>
+            </div>
+          </div>
+          <div class="timeline-right-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/4140/4140047.png" alt="Kitchen Waiter" />
+            <span class="tag-badge">KITCHEN</span>
+          </div>
+        </div>
+
+        <!-- Step 2: Preparing -->
+        <div class="timeline-step preparing">
+          <div class="timeline-left">
+            <div class="timeline-icon-circle">
+              <i class="fa-solid fa-kitchen-set"></i>
+              <div class="step-check-badge active-orange"><i class="fa-solid fa-circle"></i></div>
+            </div>
+            <div class="timeline-text">
+              <h4>Preparing your order</h4>
+              <p>Our chef is preparing your delicious food.</p>
+              <div class="timeline-timestamp">09:45 AM</div>
+            </div>
+          </div>
+          <div class="timeline-right-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Chef Cooking" />
+          </div>
+        </div>
+
+        <!-- Step 3: On the way -->
+        <div class="timeline-step">
+          <div class="timeline-left">
+            <div class="timeline-icon-circle">
+              <i class="fa-solid fa-motorcycle"></i>
+              <div class="step-check-badge active-dot"><i class="fa-solid fa-circle"></i></div>
+            </div>
+            <div class="timeline-text">
+              <h4>On the way</h4>
+              <p>Your order is on the way to your table.</p>
+              <div class="timeline-timestamp">09:55 AM</div>
+            </div>
+          </div>
+          <div class="timeline-right-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/171/171255.png" alt="Scooter Delivery" />
+          </div>
+        </div>
+
+        <!-- Step 4: Completed -->
+        <div class="timeline-step">
+          <div class="timeline-left">
+            <div class="timeline-icon-circle">
+              <i class="fa-solid fa-check"></i>
+              <div class="step-check-badge active-dot"><i class="fa-solid fa-circle"></i></div>
+            </div>
+            <div class="timeline-text">
+              <h4>Completed</h4>
+              <p>Your order has been delivered. Enjoy!</p>
+              <div class="timeline-timestamp">10:05 AM</div>
+            </div>
+          </div>
+          <div class="timeline-right-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/3050/3050158.png" alt="Delivered to table" />
+            <span class="tag-badge">TABLE 5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="track-footer-support" onclick="alert('Connecting you to Chaco Cafe Support...')">
+        <i class="fa-headphones fa-solid"></i> Need Help? Contact Support
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -1970,7 +2303,6 @@
         </ul>
       </div>
     </div>
-
     <div class="footer-full-column">
       <div class="footer-column">
         <h4>GET IN TOUCH</h4>
@@ -2020,6 +2352,7 @@
     ];
 
     let cartItems = [];
+    let currentOrderId = "#CC20250601";
 
     // Render Menu Grid
     const menuGrid = document.getElementById('menuGrid');
@@ -2058,6 +2391,7 @@
     const cartPage = document.getElementById('cartPage');
     const checkoutPage = document.getElementById('checkoutPage');
     const orderSuccessModal = document.getElementById('orderSuccessModal');
+    const trackSheetOverlay = document.getElementById('trackSheetOverlay');
 
     const modalCloseBtn = document.getElementById('modalCloseBtn');
     const modalImg = document.getElementById('modalImg');
@@ -2203,12 +2537,21 @@
 
     // Trigger Animated Tick Order Confirmed Modal
     function triggerOrderSuccess() {
-      // Generate Random Order ID
-      const randomID = '#CC' + Math.floor(10000000 + Math.random() * 90000000);
-      document.getElementById('displayOrderId').textContent = randomID;
+      currentOrderId = '#CC' + Math.floor(10000000 + Math.random() * 90000000);
+      document.getElementById('displayOrderId').textContent = currentOrderId;
+      document.getElementById('trackSheetOrderId').textContent = `Order ID ${currentOrderId}`;
 
-      // Show Animated Modal
       orderSuccessModal.classList.add('active');
+    }
+
+    // NEW TRACK SHEET DRAWER FUNCTIONS
+    function openTrackSheet() {
+      trackSheetOverlay.classList.add('active');
+    }
+
+    function closeTrackSheet() {
+      trackSheetOverlay.classList.remove('active');
+      resetAndCloseAll();
     }
 
     // Reset All Pages and Cart State when Order is Finished
