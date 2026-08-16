@@ -19,6 +19,7 @@
       --text-muted: #6b5849;
       --red-accent: #b3261e;
       --star-color: #f4a261;
+      --green-confirm: #34a853;
       --transition: all 0.3s ease;
     }
 
@@ -66,7 +67,7 @@
       100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
     }
 
-    /* HEADER (Cart Button Removed) */
+    /* HEADER */
     header {
       position: sticky;
       top: 0;
@@ -484,7 +485,7 @@
 
     .order-now-btn:hover { background: #1a0b03; }
 
-    /* FLOATING MY CART BUTTON (BOTTOM-LEFT) */
+    /* FLOATING MY CART BUTTON */
     .floating-cart-btn {
       position: fixed;
       bottom: 24px;
@@ -524,7 +525,7 @@
       line-height: 1;
     }
 
-    /* MODAL POPUP SHEET (PRODUCT DETAILS) */
+    /* PRODUCT MODAL POPUP SHEET */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -931,7 +932,7 @@
     .cart-item-img {
       width: 78px;
       height: 78px;
-      border-radius: 50%;
+      border-radius: 50%
       object-fit: cover;
       flex-shrink: 0;
     }
@@ -1096,9 +1097,7 @@
       font-size: 0.95rem;
     }
 
-    /* ----------------------------------------------------
-       CHECKOUT PAGE OVERLAY (MATCHING NEW SCREENSHOT)
-    ---------------------------------------------------- */
+    /* CHECKOUT PAGE OVERLAY */
     .checkout-page-overlay {
       position: fixed;
       inset: 0;
@@ -1225,6 +1224,190 @@
     }
 
     .payment-btn:hover { background: #1a0b03; }
+
+    /* ----------------------------------------------------
+       ORDER CONFIRMED ANIMATED TICK POPUP MODAL (NEW)
+    ---------------------------------------------------- */
+    .order-success-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 6000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .order-success-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .order-success-card {
+      background: #faf6f0;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 28px;
+      padding: 36px 24px 28px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+      transform: scale(0.85) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+
+    .order-success-overlay.active .order-success-card {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Animated Green Circle & Checkmark */
+    .tick-wrapper {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tick-circle-bg {
+      position: absolute;
+      inset: 0;
+      background: #e6f4ea;
+      border-radius: 50%;
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+
+    .tick-circle-main {
+      width: 88px;
+      height: 88px;
+      background: #34a853;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 8px 20px rgba(52, 168, 83, 0.35);
+      transform: scale(0);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;
+    }
+
+    .order-success-overlay.active .tick-circle-main {
+      transform: scale(1);
+    }
+
+    .tick-circle-main i {
+      color: #ffffff;
+      font-size: 2.5rem;
+      stroke-width: 2px;
+    }
+
+    /* Confetti/Dots around checkmark */
+    .confetti-dot {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+    .dot-1 { width: 10px; height: 10px; background: #e5a95f; top: 12px; right: 10px; }
+    .dot-2 { width: 7px; height: 7px; background: #34a853; top: 40px; left: -8px; }
+    .dot-3 { width: 12px; height: 12px; background: #d4c2b0; bottom: 10px; left: 14px; }
+    .dot-4 { width: 8px; height: 8px; background: #34a853; bottom: 20px; right: -4px; }
+    .dot-5 { width: 6px; height: 6px; background: #e5a95f; top: 2px; left: 30px; }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 0.4; }
+      100% { transform: scale(1); opacity: 0.7; }
+    }
+
+    .order-confirmed-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #2c1a0e;
+      margin-bottom: 8px;
+    }
+
+    .order-confirmed-subtitle {
+      font-size: 0.92rem;
+      color: #6b5849;
+      line-height: 1.45;
+      margin-bottom: 24px;
+    }
+
+    .dashed-divider {
+      width: 100%;
+      border-bottom: 1px dashed #d8c8b8;
+      margin-bottom: 18px;
+    }
+
+    .info-block {
+      margin-bottom: 18px;
+      width: 100%;
+    }
+
+    .info-label {
+      font-size: 0.88rem;
+      color: #7a6858;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .info-value-id {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #2c1a0e;
+      letter-spacing: 0.5px;
+    }
+
+    .info-value-time {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #2c1a0e;
+    }
+
+    .track-order-btn {
+      width: 100%;
+      background: var(--accent-brown);
+      color: #ffffff;
+      border: none;
+      padding: 15px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(44, 22, 9, 0.25);
+      transition: var(--transition);
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+
+    .track-order-btn:hover { background: #1a0b03; }
+
+    .back-home-link {
+      background: none;
+      border: none;
+      color: #2c1a0e;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
 
     /* REVIEWS */
     .reviews-container {
@@ -1367,7 +1550,7 @@
   <!-- Floating Beans Background -->
   <div id="bean-container"></div>
 
-  <!-- HEADER (Cart button removed) -->
+  <!-- HEADER -->
   <header>
     <a href="#" class="logo">
       <img src="https://cdn-icons-png.flaticon.com/512/751/751621.png" alt="Chaco Cafe Logo" />
@@ -1382,7 +1565,7 @@
     </button>
   </header>
 
-  <!-- FLOATING MY CART BUTTON (BOTTOM LEFT SIDE) -->
+  <!-- FLOATING MY CART BUTTON -->
   <button class="floating-cart-btn" id="floatingCartBtn" onclick="openCartPage()">
     <i class="fa-solid fa-cart-shopping"></i> My Cart
     <span class="floating-cart-badge" id="floatingCartBadge">0</span>
@@ -1633,7 +1816,8 @@
       </button>
     </div>
   </div>
-    <!-- CHECKOUT PAGE OVERLAY (NEWLY ADDED POPUP SCREEN) -->
+
+  <!-- CHECKOUT PAGE OVERLAY -->
   <div class="checkout-page-overlay" id="checkoutPage">
     <div class="checkout-header">
       <button class="cart-nav-circle" onclick="closeCheckoutPage()"><i class="fa-solid fa-chevron-left"></i></button>
@@ -1694,9 +1878,50 @@
         </div>
       </div>
 
-      <button class="payment-btn" onclick="completeOrder()">
+      <!-- Clicking Continue to Payment opens animated tick popup -->
+      <button class="payment-btn" onclick="triggerOrderSuccess()">
         Continue to Payment <i class="fa-solid fa-arrow-right"></i>
       </button>
+    </div>
+  </div>
+
+  <!-- ORDER CONFIRMED ANIMATED TICK POPUP MODAL -->
+  <div class="order-success-overlay" id="orderSuccessModal">
+    <div class="order-success-card">
+      <div class="tick-wrapper">
+        <div class="tick-circle-bg"></div>
+        <div class="confetti-dot dot-1"></div>
+        <div class="confetti-dot dot-2"></div>
+        <div class="confetti-dot dot-3"></div>
+        <div class="confetti-dot dot-4"></div>
+        <div class="confetti-dot dot-5"></div>
+        <div class="tick-circle-main">
+          <i class="fa-solid fa-check"></i>
+        </div>
+      </div>
+
+      <h2 class="order-confirmed-title">Order Confirmed!</h2>
+      <p class="order-confirmed-subtitle">Your order has been placed<br>successfully.</p>
+
+      <div class="dashed-divider"></div>
+
+      <div class="info-block">
+        <div class="info-label">Order ID</div>
+        <div class="info-value-id" id="displayOrderId">#CC20250601</div>
+      </div>
+
+      <div class="dashed-divider"></div>
+
+      <div class="info-block" style="margin-bottom: 24px;">
+        <div class="info-label">Estimated Delivery</div>
+        <div class="info-value-time">20 – 30 mins</div>
+      </div>
+
+      <button class="track-order-btn" onclick="resetAndCloseAll()">
+        <i class="fa-solid fa-location-dot"></i> Track Order
+      </button>
+
+      <button class="back-home-link" onclick="resetAndCloseAll()">Back to Home</button>
     </div>
   </div>
 
@@ -1791,7 +2016,6 @@
       { id: 15, name: "Creamy White Pasta", desc: "Penne pasta tossed in rich garlic parmesan cream sauce.", price: 269, rating: 150, img: "https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=1000&q=80" }
     ];
 
-    // Dynamic Cart Items State (Starts empty, appears when added)
     let cartItems = [];
 
     // Render Menu Grid
@@ -1821,7 +2045,7 @@
       menuGrid.appendChild(card);
     });
 
-    // Modal & DOM Elements
+    // DOM Elements
     let currentItem = null;
     let currentSize = 'regular';
     let currentQty = 1;
@@ -1830,6 +2054,7 @@
     const successModal = document.getElementById('successModal');
     const cartPage = document.getElementById('cartPage');
     const checkoutPage = document.getElementById('checkoutPage');
+    const orderSuccessModal = document.getElementById('orderSuccessModal');
 
     const modalCloseBtn = document.getElementById('modalCloseBtn');
     const modalImg = document.getElementById('modalImg');
@@ -1893,7 +2118,6 @@
       addToListBtn.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Add To List - ₹${totalPrice}`;
     }
 
-    // Add item into state array and show floating button
     function confirmAddToCart() {
       if (!currentItem) return;
       
@@ -1974,11 +2198,23 @@
       checkoutPage.classList.remove('active');
     }
 
-    function completeOrder() {
-      alert("Order placed successfully! Thank you for ordering with CHACO CAFÉ.");
+    // Trigger Animated Tick Order Confirmed Modal
+    function triggerOrderSuccess() {
+      // Generate Random Order ID
+      const randomID = '#CC' + Math.floor(10000000 + Math.random() * 90000000);
+      document.getElementById('displayOrderId').textContent = randomID;
+
+      // Show Animated Modal
+      orderSuccessModal.classList.add('active');
+    }
+
+    // Reset All Pages and Cart State when Order is Finished
+    function resetAndCloseAll() {
       cartItems = [];
       renderCart();
+      orderSuccessModal.classList.remove('active');
       checkoutPage.classList.remove('active');
+      cartPage.classList.remove('active');
     }
 
     // Render Cart HTML & Computations
@@ -1994,7 +2230,7 @@
       drawerBadge.textContent = totalCount;
       headerCount.textContent = `${totalCount} Item${totalCount !== 1 ? 's' : ''}`;
 
-      // Toggle Floating Button Visibility (Appears when items present, Minimizes when empty/completed)
+      // Toggle Floating Button Visibility
       if (totalCount > 0) {
         floatingBtn.classList.add('active');
       } else {
@@ -2004,7 +2240,6 @@
       if (cartItems.length === 0) {
         cartList.innerHTML = `<div class="empty-cart-text">Your cart is currently empty.</div>`;
         
-        // Reset prices in Cart & Checkout
         document.getElementById('summarySubtotal').textContent = '₹0';
         document.getElementById('summaryDelivery').textContent = '₹0';
         document.getElementById('summaryTaxes').textContent = '₹0';
@@ -2050,13 +2285,11 @@
       const taxes = Math.round(subtotal * 0.05);
       const total = subtotal + deliveryFee + taxes;
 
-      // Update Cart Page Totals
       document.getElementById('summarySubtotal').textContent = `₹${subtotal}`;
       document.getElementById('summaryDelivery').textContent = `₹${deliveryFee}`;
       document.getElementById('summaryTaxes').textContent = `₹${taxes}`;
       document.getElementById('summaryTotal').textContent = `₹${total}`;
 
-      // Update Checkout Page Totals
       document.getElementById('checkoutSubtotal').textContent = `₹${subtotal}`;
       document.getElementById('checkoutDelivery').textContent = `₹${deliveryFee}`;
       document.getElementById('checkoutTaxes').textContent = `₹${taxes}`;
@@ -2091,7 +2324,7 @@
       dots[currentSlide].classList.add('active');
     }, 3500);
 
-    // Floating Coffee Beans background generator
+    // Floating Coffee Beans generator
     const beanContainer = document.getElementById('bean-container');
     for (let i = 0; i < 10; i++) {
       const bean = document.createElement('i');
