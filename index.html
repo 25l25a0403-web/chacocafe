@@ -1451,67 +1451,7 @@
       color: var(--text-muted);
       line-height: 1.35;
     }
-    /* Styling & Bottom Slide Animation */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease;
-    }
-
-    .bottom-sheet {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #fdfbf7;
-      border-top-left-radius: 28px;
-      border-top-right-radius: 28px;
-      padding: 20px;
-      transform: translateY(100%);
-      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
-      max-height: 85vh;
-      overflow-y: auto;
-   }
-
-  /* Open State Classes */
-.overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-.bottom-sheet.active {
-  transform: translateY(0);
-}
-
-/* Close button and Drag Handle styling */
-.drag-handle {
-  width: 40px;
-  height: 5px;
-  background: #d1c7bd;
-  border-radius: 10px;
-  margin: 0 auto 15px auto;
-}
-
-.close-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: #eee6dc;
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
+  
     /* FOOTER */
     footer {
       background: var(--bg-dark);
@@ -1986,76 +1926,7 @@
       <button class="back-home-link" onclick="resetAndCloseAll()">Back to Home</button>
     </div>
   </div>
-  <!-- HTML Structure -->
-<button id="trackOrderBtn">Track Order</button>
-
-<!-- Backdrop Overlay -->
-<div id="modalOverlay" class="overlay"></div>
-
-<!-- Bottom Sheet Slide -->
-<div id="bottomSheet" class="bottom-sheet">
-  <div class="drag-handle"></div>
-  <button id="closeBtn" class="close-btn">&times;</button>
   
-  <h2 class="title">TRACK ORDER</h2>
-  <p class="order-id">Order ID #CC20250601</p>
-
-  <div class="timeline">
-    <!-- Step 1 -->
-    <div class="timeline-item active">
-      <div class="icon-container">
-        <span class="icon">✓</span>
-      </div>
-      <div class="content">
-        <h3>Accepted your order</h3>
-        <p>We've received your order.</p>
-        <span class="time">09:41 AM</span>
-      </div>
-      <span class="badge">KITCHEN</span>
-    </div>
-
-    <!-- Step 2 -->
-    <div class="timeline-item active">
-      <div class="icon-container">
-        <span class="icon">🍳</span>
-      </div>
-      <div class="content">
-        <h3>Preparing your order</h3>
-        <p>Our chef is preparing your delicious food.</p>
-        <span class="time">09:45 AM</span>
-      </div>
-    </div>
-
-    <!-- Step 3 -->
-    <div class="timeline-item">
-      <div class="icon-container">
-        <span class="icon">🛵</span>
-      </div>
-      <div class="content">
-        <h3>On the way</h3>
-        <p>Your order is on the way to your table.</p>
-        <span class="time">09:55 AM</span>
-      </div>
-    </div>
-
-    <!-- Step 4 -->
-    <div class="timeline-item">
-      <div class="icon-container">
-        <span class="icon">✓</span>
-      </div>
-      <div class="content">
-        <h3>Completed</h3>
-        <p>Your order has been delivered. Enjoy!</p>
-        <span class="time">10:05 AM</span>
-      </div>
-      <span class="badge">TABLE 5</span>
-    </div>
-  </div>
-
-  <div class="support-footer">
-    <span>🎧 Need Help? Contact Support</span>
-  </div>
-</div>
 
   <!-- FOOTER -->
   <footer>
