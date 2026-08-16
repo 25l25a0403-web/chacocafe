@@ -66,7 +66,7 @@
       100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
     }
 
-    /* HEADER */
+    /* HEADER (Cart Button Removed) */
     header {
       position: sticky;
       top: 0;
@@ -109,38 +109,6 @@
       font-size: 0.78rem;
       color: #ffffff;
       letter-spacing: 1.5px;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .cart-trigger-btn {
-      position: relative;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(229, 169, 95, 0.4);
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: var(--transition);
-    }
-
-    .cart-badge {
-      background: var(--btn-gold);
-      color: var(--bg-dark);
-      font-size: 0.7rem;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 10px;
-      line-height: 1;
     }
 
     .menu-toggle {
@@ -516,12 +484,52 @@
 
     .order-now-btn:hover { background: #1a0b03; }
 
+    /* FLOATING MY CART BUTTON (BOTTOM-LEFT) */
+    .floating-cart-btn {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 2500;
+      background: var(--accent-brown);
+      color: #ffffff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(44, 22, 9, 0.35);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(40px) scale(0.8);
+    }
+
+    .floating-cart-btn.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .floating-cart-badge {
+      background: var(--btn-gold);
+      color: var(--bg-dark);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 12px;
+      line-height: 1;
+    }
+
     /* MODAL POPUP SHEET (PRODUCT DETAILS) */
     .modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.6);
-      z-index: 2000;
+      z-index: 3000;
       display: flex;
       align-items: flex-end;
       justify-content: center;
@@ -737,7 +745,7 @@
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.55);
-      z-index: 3000;
+      z-index: 3500;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -817,9 +825,7 @@
 
     .success-ok-btn:hover { background: #1a0b03; }
 
-    /* ----------------------------------------------------
-       YOUR CART PAGE / MODAL OVERLAY (MATCHING SCREENSHOT)
-    ---------------------------------------------------- */
+    /* YOUR CART PAGE OVERLAY */
     .cart-page-overlay {
       position: fixed;
       inset: 0;
@@ -842,7 +848,6 @@
       transform: translateY(0);
     }
 
-    /* Cart Header */
     .cart-header {
       display: flex;
       align-items: center;
@@ -904,7 +909,6 @@
       cursor: pointer;
     }
 
-    /* Cart Items List */
     .cart-items-list {
       display: flex;
       flex-direction: column;
@@ -1003,7 +1007,6 @@
       padding: 4px 8px;
     }
 
-    /* Coupon Box */
     .coupon-container {
       background: #f7f1e9;
       border: 1px solid #e8ddd0;
@@ -1040,7 +1043,6 @@
       cursor: pointer;
     }
 
-    /* Summary Breakdown */
     .cart-summary-list {
       display: flex;
       flex-direction: column;
@@ -1093,6 +1095,136 @@
       padding: 40px 0;
       font-size: 0.95rem;
     }
+
+    /* ----------------------------------------------------
+       CHECKOUT PAGE OVERLAY (MATCHING NEW SCREENSHOT)
+    ---------------------------------------------------- */
+    .checkout-page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #faf6f0;
+      z-index: 5000;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(100%);
+      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
+      overflow-y: auto;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .checkout-page-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .checkout-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      background: #faf6f0;
+    }
+
+    .checkout-header-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #2c1a0e;
+    }
+
+    .checkout-content-container {
+      padding: 10px 22px 30px 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .form-group-section {
+      margin-bottom: 24px;
+    }
+
+    .form-section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #2c1a0e;
+      margin-bottom: 16px;
+    }
+
+    .input-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .input-field-group label {
+      font-size: 0.88rem;
+      color: #7a6858;
+      font-weight: 500;
+    }
+
+    .input-field-group input, .input-field-group select {
+      width: 100%;
+      padding: 14px 16px;
+      background: #faf6f0;
+      border: 1px solid #e8ddd0;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #2c1a0e;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper::after {
+      content: '\f0d7';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #2c1a0e;
+      pointer-events: none;
+    }
+
+    .checkout-divider {
+      height: 1px;
+      background: #efe4d8;
+      margin-bottom: 24px;
+    }
+
+    .payment-btn {
+      width: 100%;
+      background: var(--accent-brown);
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(44, 22, 9, 0.25);
+      transition: var(--transition);
+      margin-top: auto;
+    }
+
+    .payment-btn:hover { background: #1a0b03; }
 
     /* REVIEWS */
     .reviews-container {
@@ -1235,7 +1367,7 @@
   <!-- Floating Beans Background -->
   <div id="bean-container"></div>
 
-  <!-- HEADER -->
+  <!-- HEADER (Cart button removed) -->
   <header>
     <a href="#" class="logo">
       <img src="https://cdn-icons-png.flaticon.com/512/751/751621.png" alt="Chaco Cafe Logo" />
@@ -1245,24 +1377,22 @@
       </div>
     </a>
     
-    <div class="header-actions">
-      <!-- Quick Cart Button -->
-      <button class="cart-trigger-btn" onclick="openCartPage()">
-        <i class="fa-solid fa-cart-shopping"></i> My Cart
-        <span class="cart-badge" id="cartBadge">2</span>
-      </button>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
   </header>
+
+  <!-- FLOATING MY CART BUTTON (BOTTOM LEFT SIDE) -->
+  <button class="floating-cart-btn" id="floatingCartBtn" onclick="openCartPage()">
+    <i class="fa-solid fa-cart-shopping"></i> My Cart
+    <span class="floating-cart-badge" id="floatingCartBadge">0</span>
+  </button>
 
   <!-- SLIDE-OUT MOBILE MENU -->
   <div class="mobile-drawer" id="mobileDrawer">
     <a href="javascript:void(0)" onclick="openCartPage(); closeDrawer();">
       <span><i class="fa-solid fa-cart-shopping" style="margin-right:8px;"></i> My Cart</span>
-      <span class="cart-badge" id="drawerCartBadge">2</span>
+      <span class="floating-cart-badge" id="drawerCartBadge">0</span>
     </a>
     <a href="#about" onclick="closeDrawer()">About Us</a>
     <a href="#offers" onclick="closeDrawer()">Offers</a>
@@ -1426,6 +1556,7 @@
             </button>
           </div>
         </div>
+
         <div class="quantity-row">
           <span>Quantity</span>
           <div class="qty-controls">
@@ -1454,7 +1585,7 @@
     </div>
   </div>
 
-  <!-- YOUR CART FULLPAGE OVERLAY (SCREENSHOT MATCHING) -->
+  <!-- YOUR CART FULLPAGE OVERLAY -->
   <div class="cart-page-overlay" id="cartPage">
     <div class="cart-header">
       <button class="cart-nav-circle" onclick="closeCartPage()"><i class="fa-solid fa-chevron-left"></i></button>
@@ -1464,7 +1595,7 @@
 
     <div class="cart-content-container">
       <div class="cart-subheader">
-        <span class="cart-items-count" id="cartItemsCountHeader">2 Items</span>
+        <span class="cart-items-count" id="cartItemsCountHeader">0 Items</span>
         <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
       </div>
 
@@ -1481,24 +1612,90 @@
       <div class="cart-summary-list">
         <div class="summary-row">
           <span>Subtotal</span>
-          <span id="summarySubtotal">₹348</span>
+          <span id="summarySubtotal">₹0</span>
         </div>
         <div class="summary-row">
           <span>Delivery Fee</span>
-          <span id="summaryDelivery">₹30</span>
+          <span id="summaryDelivery">₹0</span>
         </div>
         <div class="summary-row">
           <span>Taxes (5%)</span>
-          <span id="summaryTaxes">₹19</span>
+          <span id="summaryTaxes">₹0</span>
         </div>
         <div class="summary-row total-row">
           <span>Total</span>
-          <span id="summaryTotal">₹397</span>
+          <span id="summaryTotal">₹0</span>
         </div>
       </div>
 
-      <button class="checkout-btn" onclick="alert('Proceeding to Checkout!')">
+      <button class="checkout-btn" onclick="openCheckoutPage()">
         Proceed to Checkout <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+    <!-- CHECKOUT PAGE OVERLAY (NEWLY ADDED POPUP SCREEN) -->
+  <div class="checkout-page-overlay" id="checkoutPage">
+    <div class="checkout-header">
+      <button class="cart-nav-circle" onclick="closeCheckoutPage()"><i class="fa-solid fa-chevron-left"></i></button>
+      <h2 class="checkout-header-title">CHECKOUT</h2>
+      <button class="cart-nav-circle" onclick="closeCheckoutPage()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="checkout-content-container">
+      <div class="form-group-section">
+        <div class="form-section-title">Delivery Details</div>
+        
+        <div class="input-field-group">
+          <label for="checkoutName">Full Name</label>
+          <input type="text" id="checkoutName" value="Priya Sharma" placeholder="Enter your full name" />
+        </div>
+
+        <div class="input-field-group">
+          <label for="checkoutContact">Contact Number</label>
+          <input type="tel" id="checkoutContact" value="98765 43210" placeholder="Enter contact number" />
+        </div>
+
+        <div class="input-field-group">
+          <label for="checkoutTable">Table No</label>
+          <div class="select-wrapper">
+            <select id="checkoutTable">
+              <option value="Table 1">Table 1</option>
+              <option value="Table 2">Table 2</option>
+              <option value="Table 3">Table 3</option>
+              <option value="Table 4">Table 4</option>
+              <option value="Table 5" selected>Table 5</option>
+              <option value="Takeaway">Takeaway</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-divider"></div>
+
+      <div class="form-group-section">
+        <div class="form-section-title">Order Summary</div>
+        <div class="cart-summary-list">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="checkoutSubtotal">₹0</span>
+          </div>
+          <div class="summary-row">
+            <span>Delivery Fee</span>
+            <span id="checkoutDelivery">₹0</span>
+          </div>
+          <div class="summary-row">
+            <span>Taxes (5%)</span>
+            <span id="checkoutTaxes">₹0</span>
+          </div>
+          <div class="summary-row total-row">
+            <span>Total</span>
+            <span id="checkoutTotal">₹0</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="payment-btn" onclick="completeOrder()">
+        Continue to Payment <i class="fa-solid fa-arrow-right"></i>
       </button>
     </div>
   </div>
@@ -1594,23 +1791,8 @@
       { id: 15, name: "Creamy White Pasta", desc: "Penne pasta tossed in rich garlic parmesan cream sauce.", price: 269, rating: 150, img: "https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=1000&q=80" }
     ];
 
-    // INITIAL CART DATA MATCHING SCREENSHOT EXACTLY
-    let cartItems = [
-      {
-        id: 1,
-        name: "Caramel Latte",
-        price: 199,
-        qty: 1,
-        img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80"
-      },
-      {
-        id: 2,
-        name: "Cappuccino",
-        price: 149,
-        qty: 1,
-        img: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=400&q=80"
-      }
-    ];
+    // Dynamic Cart Items State (Starts empty, appears when added)
+    let cartItems = [];
 
     // Render Menu Grid
     const menuGrid = document.getElementById('menuGrid');
@@ -1639,7 +1821,7 @@
       menuGrid.appendChild(card);
     });
 
-    // Product Modal Controls
+    // Modal & DOM Elements
     let currentItem = null;
     let currentSize = 'regular';
     let currentQty = 1;
@@ -1647,6 +1829,8 @@
     const productModal = document.getElementById('productModal');
     const successModal = document.getElementById('successModal');
     const cartPage = document.getElementById('cartPage');
+    const checkoutPage = document.getElementById('checkoutPage');
+
     const modalCloseBtn = document.getElementById('modalCloseBtn');
     const modalImg = document.getElementById('modalImg');
     const modalTitle = document.getElementById('modalTitle');
@@ -1709,7 +1893,7 @@
       addToListBtn.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Add To List - ₹${totalPrice}`;
     }
 
-    // Add item into state array and trigger modal
+    // Add item into state array and show floating button
     function confirmAddToCart() {
       if (!currentItem) return;
       
@@ -1737,11 +1921,6 @@
     function handleOkClick() {
       successModal.classList.remove('active');
       productModal.classList.remove('active');
-      
-      const menuSection = document.getElementById('menu');
-      if (menuSection) {
-        menuSection.scrollIntoView({ behavior: 'smooth' });
-      }
     }
 
     // CART PAGE OVERLAY FUNCTIONS
@@ -1781,24 +1960,60 @@
       }
     }
 
+    // CHECKOUT PAGE FUNCTIONS
+    function openCheckoutPage() {
+      if (cartItems.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      cartPage.classList.remove('active');
+      checkoutPage.classList.add('active');
+    }
+
+    function closeCheckoutPage() {
+      checkoutPage.classList.remove('active');
+    }
+
+    function completeOrder() {
+      alert("Order placed successfully! Thank you for ordering with CHACO CAFÉ.");
+      cartItems = [];
+      renderCart();
+      checkoutPage.classList.remove('active');
+    }
+
     // Render Cart HTML & Computations
     function renderCart() {
       const cartList = document.getElementById('cartItemsList');
-      const badge = document.getElementById('cartBadge');
+      const floatingBtn = document.getElementById('floatingCartBtn');
+      const floatingBadge = document.getElementById('floatingCartBadge');
       const drawerBadge = document.getElementById('drawerCartBadge');
       const headerCount = document.getElementById('cartItemsCountHeader');
       
       const totalCount = cartItems.reduce((acc, curr) => acc + curr.qty, 0);
-      badge.textContent = totalCount;
+      floatingBadge.textContent = totalCount;
       drawerBadge.textContent = totalCount;
       headerCount.textContent = `${totalCount} Item${totalCount !== 1 ? 's' : ''}`;
 
+      // Toggle Floating Button Visibility (Appears when items present, Minimizes when empty/completed)
+      if (totalCount > 0) {
+        floatingBtn.classList.add('active');
+      } else {
+        floatingBtn.classList.remove('active');
+      }
+
       if (cartItems.length === 0) {
         cartList.innerHTML = `<div class="empty-cart-text">Your cart is currently empty.</div>`;
+        
+        // Reset prices in Cart & Checkout
         document.getElementById('summarySubtotal').textContent = '₹0';
         document.getElementById('summaryDelivery').textContent = '₹0';
         document.getElementById('summaryTaxes').textContent = '₹0';
         document.getElementById('summaryTotal').textContent = '₹0';
+
+        document.getElementById('checkoutSubtotal').textContent = '₹0';
+        document.getElementById('checkoutDelivery').textContent = '₹0';
+        document.getElementById('checkoutTaxes').textContent = '₹0';
+        document.getElementById('checkoutTotal').textContent = '₹0';
         return;
       }
 
@@ -1835,10 +2050,17 @@
       const taxes = Math.round(subtotal * 0.05);
       const total = subtotal + deliveryFee + taxes;
 
+      // Update Cart Page Totals
       document.getElementById('summarySubtotal').textContent = `₹${subtotal}`;
       document.getElementById('summaryDelivery').textContent = `₹${deliveryFee}`;
       document.getElementById('summaryTaxes').textContent = `₹${taxes}`;
       document.getElementById('summaryTotal').textContent = `₹${total}`;
+
+      // Update Checkout Page Totals
+      document.getElementById('checkoutSubtotal').textContent = `₹${subtotal}`;
+      document.getElementById('checkoutDelivery').textContent = `₹${deliveryFee}`;
+      document.getElementById('checkoutTaxes').textContent = `₹${taxes}`;
+      document.getElementById('checkoutTotal').textContent = `₹${total}`;
     }
 
     // Drawer helper
@@ -1868,6 +2090,7 @@
       slides[currentSlide].classList.add('active');
       dots[currentSlide].classList.add('active');
     }, 3500);
+
     // Floating Coffee Beans background generator
     const beanContainer = document.getElementById('bean-container');
     for (let i = 0; i < 10; i++) {
